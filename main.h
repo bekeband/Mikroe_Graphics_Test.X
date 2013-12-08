@@ -51,8 +51,8 @@ extern "C" {
  * Anton Alkhimenok		05/29/2007
  * Sean Justice         02/07/2008  PIC32 support
  ********************************************************************/
-#ifndef _MAINDEMO_H
-    #define _MAINDEMO_H
+#ifndef _MAIN_H
+    #define _MAIN_H
 
 ////////////////////////////// INCLUDES //////////////////////////////
     #include "Compiler.h"
@@ -70,7 +70,29 @@ extern "C" {
     #include "CustomControlDemo.h"
     #include "./graphics/mchpGfxDrv.h"
     #include "cpld.h"
-#endif // _MAINDEMO_H
+
+  /* tick counter from interrupts incremented the timer_4 interrupt */
+extern volatile DWORD  tick;  // tick counter
+
+/////////////////////////////////////////////////////////////////////////////
+//                             FONTS USED
+/////////////////////////////////////////////////////////////////////////////
+extern const FONT_FLASH     GOLFontDefault;                 // default GOL font
+extern const FONT_FLASH     GOLSmallFont;                   // small font
+extern const FONT_FLASH     monofont;                       // equal width font
+
+
+/////////////////////////////////////////////////////////////////////////////
+//                            COLORS USED
+/////////////////////////////////////////////////////////////////////////////
+#define GRAY20      RGBConvert(51, 51, 51)
+#define RED4        RGBConvert(139, 0, 0)
+#define FIREBRICK1  RGBConvert(255, 48, 48)
+#define DARKGREEN   RGBConvert(0, 100, 0)
+#define PALEGREEN   RGBConvert(152, 251, 152)
+
+
+#endif // _MAIN_H
 
 #ifdef	__cplusplus
 }

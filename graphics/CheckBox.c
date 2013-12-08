@@ -36,6 +36,7 @@
  *
  * Date         Comment
  *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * TODO Checkbox not drawing X the check rectangulare
  * 11/12/07	    Version 1.0 release
  * 04/20/11     Fixed KEYBOARD bug on object ID and GOL_MSG param1 comparison.
  * 08/08/11     Fixed rendering to check IsDeviceBusy() if not exiting the 
@@ -408,16 +409,14 @@ WORD CbDraw(void *pObj)
                 }
     
             case CB_STATE_CHECK_DRAW:
-                if 
-                (
-                    !Bar
-                        (
-                            pCb->hdr.left + checkIndent + GOL_EMBOSS_SIZE,
-                            pCb->hdr.top + checkIndent + GOL_EMBOSS_SIZE,
-                            pCb->hdr.left + (pCb->hdr.bottom - pCb->hdr.top) - checkIndent - GOL_EMBOSS_SIZE,
-                            pCb->hdr.bottom - checkIndent - GOL_EMBOSS_SIZE
-                        )
-                )
+              if (pCb != 0)
+              {
+
+              }
+              if (!Bar(pCb->hdr.left + checkIndent + GOL_EMBOSS_SIZE,
+                  pCb->hdr.top + checkIndent + GOL_EMBOSS_SIZE,
+                  pCb->hdr.left + (pCb->hdr.bottom - pCb->hdr.top) - checkIndent - GOL_EMBOSS_SIZE,
+                  pCb->hdr.bottom - checkIndent - GOL_EMBOSS_SIZE))
                 {
                     return (0);
                 }

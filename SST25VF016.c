@@ -99,7 +99,6 @@ void SST25Init(DRV_SPI_INIT_DATA *pInitData)
     DRV_SPI_Initialize(pInitData->channel, pInitData);
     memcpy(&spiInitData, pInitData, sizeof(DRV_SPI_INIT_DATA));
 
-    /* TODO Must uncomment this line !!!*/
     SST25ResetWriteProtection();
 
 }

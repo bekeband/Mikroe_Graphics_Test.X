@@ -10,6 +10,7 @@
 #include <stdint.h>          /* For uint32_t definition                       */
 #include <stdbool.h>         /* For true/false definition                     */
 #include "user.h"            /* variables/params used by user.c               */
+#include "HardwareProfile.h"
 
 /******************************************************************************/
 /* User Functions                                                             */
@@ -20,6 +21,9 @@
 void InitApp(void)
 {
     /* Setup analog functionality and port direction */
+  INTEnableSystemMultiVectoredInt();
+  SYSTEMConfigPerformance(GetSystemClock());
+  DDPCONbits.JTAGEN = 0;  /* JTAG debug disabled */
 
     /* Initialize peripherals */
 }

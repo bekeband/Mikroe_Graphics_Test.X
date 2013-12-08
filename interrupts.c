@@ -75,5 +75,19 @@
 /* Interrupt Routines                                                         */
 /******************************************************************************/
 
-/* TODO Add interrupt routine code here. */
+volatile DWORD  tick = 0;                                   // tick counter
+
+/*********************************************************************
+* Function: Timer4 ISR
+* Overview: increments tick counter. Tick is approx. 1 ms.
+********************************************************************/
+
+void __ISR(_TIMER_4_VECTOR, ipl1) _T4Interrupt(void)
+{
+  tick++;
+  TMR4 = 0;
+  mT4ClearIntFlag();  // Clear flag
+  /* Detecting touch position in "TouchScreenResistive.c" */
+  TouchDetectPosition();
+}
 
