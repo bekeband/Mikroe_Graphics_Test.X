@@ -58,7 +58,7 @@
 #ifndef _TOUCHSCREEN_H
 #define _TOUCHSCREEN_H
 
-#include "Graphics/GOL.h"
+#include "graphics/GOL.h"
 #include "GenericTypeDefs.h"
 
 

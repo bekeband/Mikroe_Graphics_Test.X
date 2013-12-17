@@ -64,7 +64,7 @@
 
 //#if defined (USE_TOUCHSCREEN_RESISTIVE)
 
-#include "Graphics/Graphics.h"
+#include "graphics/Graphics.h"
 #include "TimeDelay.h"
 #include "TouchScreen.h"
 #include "TouchScreenResistive.h"

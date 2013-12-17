@@ -8,10 +8,6 @@
       <itemPath>user.h</itemPath>
       <itemPath>HardwareProfile.h</itemPath>
     </logicalFolder>
-    <logicalFolder name="LinkerScript"
-                   displayName="Linker Files"
-                   projectFiles="true">
-    </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
@@ -58,7 +54,6 @@
       <itemPath>drv_spi.c</itemPath>
       <itemPath>rtcc.c</itemPath>
       <itemPath>InternalResourceXC32.c</itemPath>
-      <itemPath>cpld.c</itemPath>
       <itemPath>TouchScreenResistive.c</itemPath>
       <itemPath>SST25VF016.c</itemPath>
       <itemPath>main.c</itemPath>
@@ -67,7 +62,6 @@
                    displayName="Important Files"
                    projectFiles="false">
       <itemPath>Makefile</itemPath>
-      <itemPath>main.c_old</itemPath>
     </logicalFolder>
     <itemPath>getting_started.txt</itemPath>
     <itemPath>legal_disclaimer.txt</itemPath>
@@ -89,7 +83,7 @@
         <platformTool>PICkit3PlatformTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>1.21</languageToolchainVersion>
-        <platform>3</platform>
+        <platform>2</platform>
       </toolsSet>
       <compileType>
         <linkerTool>
@@ -256,7 +250,7 @@
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.end" value="0x1d07ffff"/>
         <property key="memories.programmemory.start" value="0x1d000000"/>
-        <property key="poweroptions.powerenable" value="false"/>
+        <property key="poweroptions.powerenable" value="true"/>
         <property key="programmertogo.imagename" value=""/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.pgmspeed" value="2"/>

@@ -7,7 +7,8 @@
   Description:
     This library provides a low-level abstraction of the CUPLD device.  It 
     can be used to simplify low-level access to the device without the necessity of 
-    interacting directly with the communication module's registers, thus hiding differences from 
+    interacting directly with the communication module's registers, thus hiding
+ * differences from
     one serial device variant to another.
 *******************************************************************************/
 //DOM-IGNORE-BEGIN

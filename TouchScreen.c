@@ -41,7 +41,7 @@
 
 #if defined (USE_TOUCHSCREEN)
 
-#include "Graphics/Graphics.h"
+#include "graphics/Graphics.h"
 #include "TouchScreen.h"
 #include "TimeDelay.h"
 

@@ -42,7 +42,7 @@
 #ifndef _BEEP_H
     #define _BEEP_H
 
-    #include "Graphics/Graphics.h"
+    #include "graphics/Graphics.h"
 
     #if defined(__dsPIC33F__) || defined(__PIC24H__)
         #define BEEP_TIME   10

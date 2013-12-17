@@ -43,7 +43,7 @@
 
 BYTE _language = 0;
 
-#include "Graphics/Graphics.h"
+#include "graphics/Graphics.h"
 #if defined(__C30__) || defined (__XC16__)
     #include "InternalResourceXC16.h"
 #else    

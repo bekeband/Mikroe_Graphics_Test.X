@@ -57,7 +57,7 @@ extern "C" {
 ////////////////////////////// INCLUDES //////////////////////////////
     #include "Compiler.h"
     #include "GenericTypeDefs.h"
-    #include "Graphics/Graphics.h"
+    #include "graphics/Graphics.h"
     #include "drv_spi.h"
     #include "MCHP25LC256.h"
     #include "SST25VF016.h"

@@ -19,7 +19,7 @@ endif
 endif
 
 # Environment
-MKDIR=gnumkdir -p
+MKDIR=mkdir -p
 RM=rm -f 
 MV=mv 
 CP=cp 
@@ -45,17 +45,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=graphics/drivers/ILI9341.c graphics/AnalogClock.c graphics/Button.c graphics/Chart.c graphics/CheckBox.c graphics/DigitalMeter.c graphics/EditBox.c graphics/GOL.c graphics/GOLSchemeDefault.c graphics/Grid.c graphics/GroupBox.c graphics/ListBox.c graphics/Meter.c graphics/Palette.c graphics/Picture.c graphics/Primitive.c graphics/ProgressBar.c graphics/RadioButton.c graphics/RoundDial.c graphics/Slider.c graphics/StaticText.c graphics/Template.c graphics/TextEntry.c graphics/Transitions.c graphics/Transitions_weak.c graphics/Window.c configuration_bits.c exceptions.c interrupts.c system.c user.c TimeDelay.c Beep.c CustomControlDemo.c TouchScreen.c drv_spi.c rtcc.c InternalResourceXC32.c cpld.c TouchScreenResistive.c SST25VF016.c main.c
+SOURCEFILES_QUOTED_IF_SPACED=graphics/drivers/ILI9341.c graphics/AnalogClock.c graphics/Button.c graphics/Chart.c graphics/CheckBox.c graphics/DigitalMeter.c graphics/EditBox.c graphics/GOL.c graphics/GOLSchemeDefault.c graphics/Grid.c graphics/GroupBox.c graphics/ListBox.c graphics/Meter.c graphics/Palette.c graphics/Picture.c graphics/Primitive.c graphics/ProgressBar.c graphics/RadioButton.c graphics/RoundDial.c graphics/Slider.c graphics/StaticText.c graphics/Template.c graphics/TextEntry.c graphics/Transitions.c graphics/Transitions_weak.c graphics/Window.c configuration_bits.c exceptions.c interrupts.c system.c user.c TimeDelay.c Beep.c CustomControlDemo.c TouchScreen.c drv_spi.c rtcc.c InternalResourceXC32.c TouchScreenResistive.c SST25VF016.c main.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/graphics/drivers/ILI9341.o ${OBJECTDIR}/graphics/AnalogClock.o ${OBJECTDIR}/graphics/Button.o ${OBJECTDIR}/graphics/Chart.o ${OBJECTDIR}/graphics/CheckBox.o ${OBJECTDIR}/graphics/DigitalMeter.o ${OBJECTDIR}/graphics/EditBox.o ${OBJECTDIR}/graphics/GOL.o ${OBJECTDIR}/graphics/GOLSchemeDefault.o ${OBJECTDIR}/graphics/Grid.o ${OBJECTDIR}/graphics/GroupBox.o ${OBJECTDIR}/graphics/ListBox.o ${OBJECTDIR}/graphics/Meter.o ${OBJECTDIR}/graphics/Palette.o ${OBJECTDIR}/graphics/Picture.o ${OBJECTDIR}/graphics/Primitive.o ${OBJECTDIR}/graphics/ProgressBar.o ${OBJECTDIR}/graphics/RadioButton.o ${OBJECTDIR}/graphics/RoundDial.o ${OBJECTDIR}/graphics/Slider.o ${OBJECTDIR}/graphics/StaticText.o ${OBJECTDIR}/graphics/Template.o ${OBJECTDIR}/graphics/TextEntry.o ${OBJECTDIR}/graphics/Transitions.o ${OBJECTDIR}/graphics/Transitions_weak.o ${OBJECTDIR}/graphics/Window.o ${OBJECTDIR}/configuration_bits.o ${OBJECTDIR}/exceptions.o ${OBJECTDIR}/interrupts.o ${OBJECTDIR}/system.o ${OBJECTDIR}/user.o ${OBJECTDIR}/TimeDelay.o ${OBJECTDIR}/Beep.o ${OBJECTDIR}/CustomControlDemo.o ${OBJECTDIR}/TouchScreen.o ${OBJECTDIR}/drv_spi.o ${OBJECTDIR}/rtcc.o ${OBJECTDIR}/InternalResourceXC32.o ${OBJECTDIR}/cpld.o ${OBJECTDIR}/TouchScreenResistive.o ${OBJECTDIR}/SST25VF016.o ${OBJECTDIR}/main.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/graphics/drivers/ILI9341.o.d ${OBJECTDIR}/graphics/AnalogClock.o.d ${OBJECTDIR}/graphics/Button.o.d ${OBJECTDIR}/graphics/Chart.o.d ${OBJECTDIR}/graphics/CheckBox.o.d ${OBJECTDIR}/graphics/DigitalMeter.o.d ${OBJECTDIR}/graphics/EditBox.o.d ${OBJECTDIR}/graphics/GOL.o.d ${OBJECTDIR}/graphics/GOLSchemeDefault.o.d ${OBJECTDIR}/graphics/Grid.o.d ${OBJECTDIR}/graphics/GroupBox.o.d ${OBJECTDIR}/graphics/ListBox.o.d ${OBJECTDIR}/graphics/Meter.o.d ${OBJECTDIR}/graphics/Palette.o.d ${OBJECTDIR}/graphics/Picture.o.d ${OBJECTDIR}/graphics/Primitive.o.d ${OBJECTDIR}/graphics/ProgressBar.o.d ${OBJECTDIR}/graphics/RadioButton.o.d ${OBJECTDIR}/graphics/RoundDial.o.d ${OBJECTDIR}/graphics/Slider.o.d ${OBJECTDIR}/graphics/StaticText.o.d ${OBJECTDIR}/graphics/Template.o.d ${OBJECTDIR}/graphics/TextEntry.o.d ${OBJECTDIR}/graphics/Transitions.o.d ${OBJECTDIR}/graphics/Transitions_weak.o.d ${OBJECTDIR}/graphics/Window.o.d ${OBJECTDIR}/configuration_bits.o.d ${OBJECTDIR}/exceptions.o.d ${OBJECTDIR}/interrupts.o.d ${OBJECTDIR}/system.o.d ${OBJECTDIR}/user.o.d ${OBJECTDIR}/TimeDelay.o.d ${OBJECTDIR}/Beep.o.d ${OBJECTDIR}/CustomControlDemo.o.d ${OBJECTDIR}/TouchScreen.o.d ${OBJECTDIR}/drv_spi.o.d ${OBJECTDIR}/rtcc.o.d ${OBJECTDIR}/InternalResourceXC32.o.d ${OBJECTDIR}/cpld.o.d ${OBJECTDIR}/TouchScreenResistive.o.d ${OBJECTDIR}/SST25VF016.o.d ${OBJECTDIR}/main.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/graphics/drivers/ILI9341.o ${OBJECTDIR}/graphics/AnalogClock.o ${OBJECTDIR}/graphics/Button.o ${OBJECTDIR}/graphics/Chart.o ${OBJECTDIR}/graphics/CheckBox.o ${OBJECTDIR}/graphics/DigitalMeter.o ${OBJECTDIR}/graphics/EditBox.o ${OBJECTDIR}/graphics/GOL.o ${OBJECTDIR}/graphics/GOLSchemeDefault.o ${OBJECTDIR}/graphics/Grid.o ${OBJECTDIR}/graphics/GroupBox.o ${OBJECTDIR}/graphics/ListBox.o ${OBJECTDIR}/graphics/Meter.o ${OBJECTDIR}/graphics/Palette.o ${OBJECTDIR}/graphics/Picture.o ${OBJECTDIR}/graphics/Primitive.o ${OBJECTDIR}/graphics/ProgressBar.o ${OBJECTDIR}/graphics/RadioButton.o ${OBJECTDIR}/graphics/RoundDial.o ${OBJECTDIR}/graphics/Slider.o ${OBJECTDIR}/graphics/StaticText.o ${OBJECTDIR}/graphics/Template.o ${OBJECTDIR}/graphics/TextEntry.o ${OBJECTDIR}/graphics/Transitions.o ${OBJECTDIR}/graphics/Transitions_weak.o ${OBJECTDIR}/graphics/Window.o ${OBJECTDIR}/configuration_bits.o ${OBJECTDIR}/exceptions.o ${OBJECTDIR}/interrupts.o ${OBJECTDIR}/system.o ${OBJECTDIR}/user.o ${OBJECTDIR}/TimeDelay.o ${OBJECTDIR}/Beep.o ${OBJECTDIR}/CustomControlDemo.o ${OBJECTDIR}/TouchScreen.o ${OBJECTDIR}/drv_spi.o ${OBJECTDIR}/rtcc.o ${OBJECTDIR}/InternalResourceXC32.o ${OBJECTDIR}/TouchScreenResistive.o ${OBJECTDIR}/SST25VF016.o ${OBJECTDIR}/main.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/graphics/drivers/ILI9341.o.d ${OBJECTDIR}/graphics/AnalogClock.o.d ${OBJECTDIR}/graphics/Button.o.d ${OBJECTDIR}/graphics/Chart.o.d ${OBJECTDIR}/graphics/CheckBox.o.d ${OBJECTDIR}/graphics/DigitalMeter.o.d ${OBJECTDIR}/graphics/EditBox.o.d ${OBJECTDIR}/graphics/GOL.o.d ${OBJECTDIR}/graphics/GOLSchemeDefault.o.d ${OBJECTDIR}/graphics/Grid.o.d ${OBJECTDIR}/graphics/GroupBox.o.d ${OBJECTDIR}/graphics/ListBox.o.d ${OBJECTDIR}/graphics/Meter.o.d ${OBJECTDIR}/graphics/Palette.o.d ${OBJECTDIR}/graphics/Picture.o.d ${OBJECTDIR}/graphics/Primitive.o.d ${OBJECTDIR}/graphics/ProgressBar.o.d ${OBJECTDIR}/graphics/RadioButton.o.d ${OBJECTDIR}/graphics/RoundDial.o.d ${OBJECTDIR}/graphics/Slider.o.d ${OBJECTDIR}/graphics/StaticText.o.d ${OBJECTDIR}/graphics/Template.o.d ${OBJECTDIR}/graphics/TextEntry.o.d ${OBJECTDIR}/graphics/Transitions.o.d ${OBJECTDIR}/graphics/Transitions_weak.o.d ${OBJECTDIR}/graphics/Window.o.d ${OBJECTDIR}/configuration_bits.o.d ${OBJECTDIR}/exceptions.o.d ${OBJECTDIR}/interrupts.o.d ${OBJECTDIR}/system.o.d ${OBJECTDIR}/user.o.d ${OBJECTDIR}/TimeDelay.o.d ${OBJECTDIR}/Beep.o.d ${OBJECTDIR}/CustomControlDemo.o.d ${OBJECTDIR}/TouchScreen.o.d ${OBJECTDIR}/drv_spi.o.d ${OBJECTDIR}/rtcc.o.d ${OBJECTDIR}/InternalResourceXC32.o.d ${OBJECTDIR}/TouchScreenResistive.o.d ${OBJECTDIR}/SST25VF016.o.d ${OBJECTDIR}/main.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/graphics/drivers/ILI9341.o ${OBJECTDIR}/graphics/AnalogClock.o ${OBJECTDIR}/graphics/Button.o ${OBJECTDIR}/graphics/Chart.o ${OBJECTDIR}/graphics/CheckBox.o ${OBJECTDIR}/graphics/DigitalMeter.o ${OBJECTDIR}/graphics/EditBox.o ${OBJECTDIR}/graphics/GOL.o ${OBJECTDIR}/graphics/GOLSchemeDefault.o ${OBJECTDIR}/graphics/Grid.o ${OBJECTDIR}/graphics/GroupBox.o ${OBJECTDIR}/graphics/ListBox.o ${OBJECTDIR}/graphics/Meter.o ${OBJECTDIR}/graphics/Palette.o ${OBJECTDIR}/graphics/Picture.o ${OBJECTDIR}/graphics/Primitive.o ${OBJECTDIR}/graphics/ProgressBar.o ${OBJECTDIR}/graphics/RadioButton.o ${OBJECTDIR}/graphics/RoundDial.o ${OBJECTDIR}/graphics/Slider.o ${OBJECTDIR}/graphics/StaticText.o ${OBJECTDIR}/graphics/Template.o ${OBJECTDIR}/graphics/TextEntry.o ${OBJECTDIR}/graphics/Transitions.o ${OBJECTDIR}/graphics/Transitions_weak.o ${OBJECTDIR}/graphics/Window.o ${OBJECTDIR}/configuration_bits.o ${OBJECTDIR}/exceptions.o ${OBJECTDIR}/interrupts.o ${OBJECTDIR}/system.o ${OBJECTDIR}/user.o ${OBJECTDIR}/TimeDelay.o ${OBJECTDIR}/Beep.o ${OBJECTDIR}/CustomControlDemo.o ${OBJECTDIR}/TouchScreen.o ${OBJECTDIR}/drv_spi.o ${OBJECTDIR}/rtcc.o ${OBJECTDIR}/InternalResourceXC32.o ${OBJECTDIR}/cpld.o ${OBJECTDIR}/TouchScreenResistive.o ${OBJECTDIR}/SST25VF016.o ${OBJECTDIR}/main.o
+OBJECTFILES=${OBJECTDIR}/graphics/drivers/ILI9341.o ${OBJECTDIR}/graphics/AnalogClock.o ${OBJECTDIR}/graphics/Button.o ${OBJECTDIR}/graphics/Chart.o ${OBJECTDIR}/graphics/CheckBox.o ${OBJECTDIR}/graphics/DigitalMeter.o ${OBJECTDIR}/graphics/EditBox.o ${OBJECTDIR}/graphics/GOL.o ${OBJECTDIR}/graphics/GOLSchemeDefault.o ${OBJECTDIR}/graphics/Grid.o ${OBJECTDIR}/graphics/GroupBox.o ${OBJECTDIR}/graphics/ListBox.o ${OBJECTDIR}/graphics/Meter.o ${OBJECTDIR}/graphics/Palette.o ${OBJECTDIR}/graphics/Picture.o ${OBJECTDIR}/graphics/Primitive.o ${OBJECTDIR}/graphics/ProgressBar.o ${OBJECTDIR}/graphics/RadioButton.o ${OBJECTDIR}/graphics/RoundDial.o ${OBJECTDIR}/graphics/Slider.o ${OBJECTDIR}/graphics/StaticText.o ${OBJECTDIR}/graphics/Template.o ${OBJECTDIR}/graphics/TextEntry.o ${OBJECTDIR}/graphics/Transitions.o ${OBJECTDIR}/graphics/Transitions_weak.o ${OBJECTDIR}/graphics/Window.o ${OBJECTDIR}/configuration_bits.o ${OBJECTDIR}/exceptions.o ${OBJECTDIR}/interrupts.o ${OBJECTDIR}/system.o ${OBJECTDIR}/user.o ${OBJECTDIR}/TimeDelay.o ${OBJECTDIR}/Beep.o ${OBJECTDIR}/CustomControlDemo.o ${OBJECTDIR}/TouchScreen.o ${OBJECTDIR}/drv_spi.o ${OBJECTDIR}/rtcc.o ${OBJECTDIR}/InternalResourceXC32.o ${OBJECTDIR}/TouchScreenResistive.o ${OBJECTDIR}/SST25VF016.o ${OBJECTDIR}/main.o
 
 # Source Files
-SOURCEFILES=graphics/drivers/ILI9341.c graphics/AnalogClock.c graphics/Button.c graphics/Chart.c graphics/CheckBox.c graphics/DigitalMeter.c graphics/EditBox.c graphics/GOL.c graphics/GOLSchemeDefault.c graphics/Grid.c graphics/GroupBox.c graphics/ListBox.c graphics/Meter.c graphics/Palette.c graphics/Picture.c graphics/Primitive.c graphics/ProgressBar.c graphics/RadioButton.c graphics/RoundDial.c graphics/Slider.c graphics/StaticText.c graphics/Template.c graphics/TextEntry.c graphics/Transitions.c graphics/Transitions_weak.c graphics/Window.c configuration_bits.c exceptions.c interrupts.c system.c user.c TimeDelay.c Beep.c CustomControlDemo.c TouchScreen.c drv_spi.c rtcc.c InternalResourceXC32.c cpld.c TouchScreenResistive.c SST25VF016.c main.c
+SOURCEFILES=graphics/drivers/ILI9341.c graphics/AnalogClock.c graphics/Button.c graphics/Chart.c graphics/CheckBox.c graphics/DigitalMeter.c graphics/EditBox.c graphics/GOL.c graphics/GOLSchemeDefault.c graphics/Grid.c graphics/GroupBox.c graphics/ListBox.c graphics/Meter.c graphics/Palette.c graphics/Picture.c graphics/Primitive.c graphics/ProgressBar.c graphics/RadioButton.c graphics/RoundDial.c graphics/Slider.c graphics/StaticText.c graphics/Template.c graphics/TextEntry.c graphics/Transitions.c graphics/Transitions_weak.c graphics/Window.c configuration_bits.c exceptions.c interrupts.c system.c user.c TimeDelay.c Beep.c CustomControlDemo.c TouchScreen.c drv_spi.c rtcc.c InternalResourceXC32.c TouchScreenResistive.c SST25VF016.c main.c
 
 
 CFLAGS=
@@ -72,7 +72,7 @@ LDLIBSOPTIONS=
 FIXDEPS=fixDeps
 
 .build-conf:  ${BUILD_SUBPROJECTS}
-	${MAKE} ${MAKE_OPTIONS} -f nbproject/Makefile-C32_PIC32MX460F512L.mk dist/${CND_CONF}/${IMAGE_TYPE}/Mikroe_Graphics_Test.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+	${MAKE}  -f nbproject/Makefile-C32_PIC32MX460F512L.mk dist/${CND_CONF}/${IMAGE_TYPE}/Mikroe_Graphics_Test.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 
 MP_PROCESSOR_OPTION=32MX460F512L
 MP_LINKER_FILE_OPTION=
@@ -318,12 +318,6 @@ ${OBJECTDIR}/InternalResourceXC32.o: InternalResourceXC32.c  nbproject/Makefile-
 	@${RM} ${OBJECTDIR}/InternalResourceXC32.o.d 
 	@${RM} ${OBJECTDIR}/InternalResourceXC32.o 
 	@${FIXDEPS} "${OBJECTDIR}/InternalResourceXC32.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/InternalResourceXC32.o.d" -o ${OBJECTDIR}/InternalResourceXC32.o InternalResourceXC32.c   
-	
-${OBJECTDIR}/cpld.o: cpld.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR} 
-	@${RM} ${OBJECTDIR}/cpld.o.d 
-	@${RM} ${OBJECTDIR}/cpld.o 
-	@${FIXDEPS} "${OBJECTDIR}/cpld.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/cpld.o.d" -o ${OBJECTDIR}/cpld.o cpld.c   
 	
 ${OBJECTDIR}/TouchScreenResistive.o: TouchScreenResistive.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
@@ -572,12 +566,6 @@ ${OBJECTDIR}/InternalResourceXC32.o: InternalResourceXC32.c  nbproject/Makefile-
 	@${RM} ${OBJECTDIR}/InternalResourceXC32.o 
 	@${FIXDEPS} "${OBJECTDIR}/InternalResourceXC32.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/InternalResourceXC32.o.d" -o ${OBJECTDIR}/InternalResourceXC32.o InternalResourceXC32.c   
 	
-${OBJECTDIR}/cpld.o: cpld.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR} 
-	@${RM} ${OBJECTDIR}/cpld.o.d 
-	@${RM} ${OBJECTDIR}/cpld.o 
-	@${FIXDEPS} "${OBJECTDIR}/cpld.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/cpld.o.d" -o ${OBJECTDIR}/cpld.o cpld.c   
-	
 ${OBJECTDIR}/TouchScreenResistive.o: TouchScreenResistive.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
 	@${RM} ${OBJECTDIR}/TouchScreenResistive.o.d 
@@ -615,7 +603,7 @@ else
 dist/${CND_CONF}/${IMAGE_TYPE}/Mikroe_Graphics_Test.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk   
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
 	${MP_CC} $(MP_EXTRA_LD_PRE)  -mprocessor=$(MP_PROCESSOR_OPTION)  -o dist/${CND_CONF}/${IMAGE_TYPE}/Mikroe_Graphics_Test.X.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX} ${OBJECTFILES_QUOTED_IF_SPACED}          -Wl,--defsym=__MPLAB_BUILD=1$(MP_EXTRA_LD_POST)$(MP_LINKER_FILE_OPTION),--defsym=_min_heap_size=2000,--defsym=_min_stack_size=1024,-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map"
-	${MP_CC_DIR}\\xc32-bin2hex dist/${CND_CONF}/${IMAGE_TYPE}/Mikroe_Graphics_Test.X.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX} 
+	${MP_CC_DIR}/xc32-bin2hex dist/${CND_CONF}/${IMAGE_TYPE}/Mikroe_Graphics_Test.X.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX} 
 endif
 
 
@@ -634,7 +622,7 @@ endif
 # Enable dependency checking
 .dep.inc: .depcheck-impl
 
-DEPFILES=$(shell mplabwildcard ${POSSIBLE_DEPFILES})
+DEPFILES=$(shell "${PATH_TO_IDE_BIN}"mplabwildcard ${POSSIBLE_DEPFILES})
 ifneq (${DEPFILES},)
 include ${DEPFILES}
 endif
