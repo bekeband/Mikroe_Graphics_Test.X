@@ -25,9 +25,18 @@
 /* paste into this project.                                                   */
 /******************************************************************************/
 
-#pragma config FPLLODIV = DIV_2, FPLLMUL = MUL_20, FPLLIDIV = DIV_1
-#pragma config FWDTEN = OFF, FCKSM = CSECME, FPBDIV = DIV_1
-#pragma config OSCIOFNC = ON, POSCMOD = XT, FSOSCEN = ON, FNOSC = PRIPLL
-#pragma config CP = OFF, BWP = OFF, PWP = OFF
+#pragma config FPLLODIV = DIV_2
+#pragma config FPLLMUL = MUL_20
+#pragma config FPLLIDIV = DIV_1
+#pragma config FWDTEN = OFF
+#pragma config FCKSM = CSECME
+#pragma config FPBDIV = DIV_2
+#pragma config OSCIOFNC = ON
+#pragma config POSCMOD = XT
+#pragma config FSOSCEN = ON
+#pragma config FNOSC = PRIPLL
+#pragma config CP = OFF
+#pragma config BWP = OFF
+#pragma config PWP = OFF
 
 

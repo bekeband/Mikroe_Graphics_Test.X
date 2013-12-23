@@ -3,7 +3,11 @@
     #define __HARDWARE_PROFILE_H
 
 /*********************************************************************
-* PIC Device Specific includes
+* Hardwareprofile for Mikroelectronika PIC32MX
+ * Compact development system rich with on-board peripherals for all-round
+ * multimedia development on PIC32MX460F512L device.
+ * WARNING the device contains
+ * newest LCD driver that called ILI9341 LCD driver !!!
 *********************************************************************/
     #include "Compiler.h"
 
@@ -24,9 +28,8 @@
 /*********************************************************************
 * Macro: #define	GetPeripheralClock() 
 * Overview: This macro returns the peripheral clock frequency 
-*			used in Hertz.
-*			* value for PIC24 is <PRE>(GetSystemClock()/2) </PRE> 
-*			* value for PIC32 is <PRE>(GetSystemClock()/(1<<OSCCONbits.PBDIV)) </PRE>
+* used in Hertz.
+* value for PIC32 is <PRE>(GetSystemClock()/(1<<OSCCONbits.PBDIV)) </PRE>
 ********************************************************************/
   #define GetPeripheralClock()    (GetSystemClock() / (1 << OSCCONbits.PBDIV))
 
@@ -39,28 +42,13 @@
 ********************************************************************/
   #define GetInstructionClock()   (GetSystemClock())
 
-/* ################################################################## */
 /*********************************************************************
 * START OF GRAPHICS RELATED MACROS
 ********************************************************************/
-/* ################################################################## */
-
-/*********************************************************************
-* AUTO GENERATED CODE 
-********************************************************************/
-
-//Auto Generated Code
 
 #define USE_16BIT_PMP
 #define GFX_USE_DISPLAY_CONTROLLER_ILI9341
 #define MIKRO_BOARD
-//End Auto Generated Code
-
-
-
-/*********************************************************************
-* END OF AUTO GENERATED CODE 
-********************************************************************/
 
 /*********************************************************************
 * External Memory Programmer Settings
