@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=Mikroe_Graphics_Test.X
+PROJECTNAME=Graphics_Test_simple_mikroe
 
 # Active Configuration
 DEFAULTCONF=C32_PIC32MX460F512L

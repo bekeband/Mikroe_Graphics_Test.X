@@ -10,9 +10,9 @@ CND_CONF=C32_PIC32MX460F512L
 CND_DISTDIR=dist
 TMPDIR=build/${CND_CONF}/${IMAGE_TYPE}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=dist/${CND_CONF}/${IMAGE_TYPE}/Mikroe_Graphics_Test.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
-OUTPUT_BASENAME=Mikroe_Graphics_Test.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
-PACKAGE_TOP_DIR=mikroegraphicstest.x/
+OUTPUT_PATH=dist/${CND_CONF}/${IMAGE_TYPE}/Graphics_Test_simple_mikroe.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+OUTPUT_BASENAME=Graphics_Test_simple_mikroe.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+PACKAGE_TOP_DIR=graphicstestsimplemikroe/
 
 # Functions
 function checkReturnCode
@@ -57,15 +57,15 @@ mkdir -p ${TMPDIR}
 
 # Copy files and create directories and links
 cd "${TOP}"
-makeDirectory ${TMPDIR}/mikroegraphicstest.x/bin
+makeDirectory ${TMPDIR}/graphicstestsimplemikroe/bin
 copyFileToTmpDir "${OUTPUT_PATH}" "${TMPDIR}/${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}" 0755
 
 
 # Generate tar file
 cd "${TOP}"
-rm -f ${CND_DISTDIR}/${CND_CONF}/package/mikroegraphicstest.x.tar
+rm -f ${CND_DISTDIR}/${CND_CONF}/package/graphicstestsimplemikroe.tar
 cd ${TMPDIR}
-tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/package/mikroegraphicstest.x.tar *
+tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/package/graphicstestsimplemikroe.tar *
 checkReturnCode
 
 # Cleanup
