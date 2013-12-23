@@ -378,8 +378,6 @@ WORD MtrDraw(void *pObj)
 
     while(1)
     {
-        if(IsDeviceBusy())
-            return (0);
 
         switch(state)
         {
@@ -732,8 +730,6 @@ WORD MtrDraw(void *pObj)
                 state = NEEDLE_DRAW;
     
             case NEEDLE_DRAW:
-                if(IsDeviceBusy())
-                    return (0);
     
                 // At this point, pMtr->value is assumed to contain the new value of the meter.
                 // calculate the new angle:
@@ -838,8 +834,6 @@ WORD MtrDraw(void *pObj)
 #ifdef MTR_BUILD_OPTION_DISPLAY_VALUES_ENABLE
     
             case VALUE_ERASE:
-                if(IsDeviceBusy())
-                    return (0);
     
                 // reset the line to normal
                 SetLineThickness(NORMAL_LINE);
@@ -893,8 +887,6 @@ WORD MtrDraw(void *pObj)
                 state = VALUE_DRAW;
     
             case VALUE_DRAW:
-                if(IsDeviceBusy())
-                    return (0);
     
                 if(angle >= ARC1_DEGREE)
                 {

@@ -185,8 +185,6 @@ WORD StDraw(void *pObj)
 
     while(1)
     {
-        if(IsDeviceBusy())
-            return (0);
     
         switch(state)
         {
@@ -266,8 +264,6 @@ WORD StDraw(void *pObj)
                 state = ST_STATE_INIT;
     
             case ST_STATE_INIT:
-                if(IsDeviceBusy())
-                    return (0);
     
                 // set the text color
                 if(!GetState(pSt, ST_DISABLED))

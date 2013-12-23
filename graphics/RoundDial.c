@@ -408,10 +408,7 @@ WORD RdiaDraw(void *pObj)
     pDia = (ROUNDDIAL *)pObj;
 
     while(1)
-    {
-        if(IsDeviceBusy())
-            return (0);
-    
+    {    
         switch(state)
         {
             case REMOVE:

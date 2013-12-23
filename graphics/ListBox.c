@@ -584,8 +584,6 @@ WORD LbDraw(void *pObj)
 
     while(1)
     {
-        if(IsDeviceBusy())
-            return (0);
 
         switch(state)
         {
@@ -844,8 +842,6 @@ WORD LbDraw(void *pObj)
             case LB_STATE_SET_ITEMFOCUS:
                 if(pLb->pFocusItem == pCurItem)
                 {
-                    if(IsDeviceBusy())
-                        return (0);
     
                     if(GetState(pLb, LB_FOCUSED))
                     {

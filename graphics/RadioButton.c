@@ -359,9 +359,6 @@ WORD RbDraw(void *pObj)
 
     while(1)
     {
-
-        if(IsDeviceBusy())
-            return (0);
     
         switch(state)
         {

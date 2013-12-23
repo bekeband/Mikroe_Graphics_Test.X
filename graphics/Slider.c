@@ -687,8 +687,6 @@ WORD SldDraw(void *pObj)
 
 	while(1)
 	{
-		if(IsDeviceBusy())
-			return (0);
 
 		switch(state)
 		{
@@ -831,8 +829,6 @@ WORD SldDraw(void *pObj)
 					state = SLD_STATE_CLEARTHUMB;   // go to state to remove current position
 
 			case SLD_STATE_CLEARTHUMB:              // this removes the current thumb
-				if(IsDeviceBusy()) 
-				    return (0);
 
 				if(!GetState(pSld, SLD_DRAW_THUMB))
 				{                               // SLD_DRAW_THUMB is only set when
@@ -918,8 +914,6 @@ WORD SldDraw(void *pObj)
 				state = SLD_STATE_THUMB;
 
 			case SLD_STATE_THUMB:
-				if(IsDeviceBusy()) 
-				    return (0);
 				if(!GetState(pSld, SLD_VERTICAL))
 				{                               // Draw the slider thumb based on the
 					// current position

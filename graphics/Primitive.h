@@ -135,46 +135,17 @@ extern GFX_COLOR    _prevAlphaColor;
 *********************************************************************/
 
 // Mid colors are calculated only once while rendering each character. This is ideal for rendering text over a constant background.
-    #define ANTIALIAS_OPAQUE        0
+#define ANTIALIAS_OPAQUE        0
 
 // Mid values are calculated for every necessary pixel. This feature is useful when rendering text over an image 
 // or when the background is not one flat color.
-    #define ANTIALIAS_TRANSLUCENT   1
+#define ANTIALIAS_TRANSLUCENT   1
 
-/*********************************************************************
-* Overview: This macro sets the data type for the strings and characters.
-*			There are three types used for XCHAR and the type is selected by  
-*           adding one of the macros in GraphicsConfig.h. 
-*	<TABLE>
-*    	In GraphicsConfig.h         XCHAR	                        Description
-*     	##########################  #############################	##########################
-*     	#define USE_MULTIBYTECHAR   #define XCHAR   unsigned short	Use multibyte characters (0-2^16 range).
-*     	#define USE_UNSIGNED_XCHAR  #define XCHAR   unsigned char	Use unsigned char (0-255 range).
-*     	none of the two defined     #define XCHAR   char	        Use signed char (0-127 range).
-*	</TABLE>
-*
-*           Note: Only one of the two or none at all are defined in GraphicsConfig.h.
-*                 - #define USE_MULTIBYTECHAR 
-*                 - #define USE_UNSIGNED_XCHAR 
-*                 - when none are defined, XCHAR defaults to type char.
-*********************************************************************/
     
-    #if defined (USE_MULTIBYTECHAR) 
     
-        #define XCHAR   unsigned short
-        #define UXCHAR  unsigned short
+#define XCHAR   unsigned char
+#define UXCHAR  unsigned char
         
-    #elif defined (USE_UNSIGNED_XCHAR)
-    
-        #define XCHAR   unsigned char
-        #define UXCHAR  unsigned char
-        
-    #else
-    
-        #define XCHAR   char
-        #define UXCHAR  unsigned char
-        
-    #endif
 
 // bevel drawing type (0 = full bevel, 0xF0 - top bevel only, 0x0F - bottom bevel only
 extern BYTE _bevelDrawType;

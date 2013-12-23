@@ -918,8 +918,6 @@ WORD GOLPanelDrawTsk(void)
 
     while(1)
     {
-        if(IsDeviceBusy())
-            return (0);
         switch(state)
         {
             case BEGIN:
@@ -1308,8 +1306,6 @@ WORD GOLTwoTonePanelDrawTsk(void)
 
     while(1)
     {
-        if(IsDeviceBusy())
-            return (0);
         switch(state)
         {
             case BEGIN:

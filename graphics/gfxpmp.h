@@ -1,44 +1,6 @@
-    
-/*****************************************************************************
- *  Module for Microchip Graphics Library
- *  PMP driver
- *****************************************************************************
- * FileName:        pmp.c
- * Processor:       PIC24, PIC32
- * Compiler:       	MPLAB C30, MPLAB C32
- * Company:         Microchip Technology Incorporated
- *
- * Software License Agreement
- *
- * Copyright © 2010 Microchip Technology Inc.  All rights reserved.
- * Microchip licenses to you the right to use, modify, copy and distribute
- * Software only when embedded on a Microchip microcontroller or digital
- * signal controller, which is integrated into your product or third party
- * product (pursuant to the sublicense terms in the accompanying license
- * agreement).  
- *
- * You should refer to the license agreement accompanying this Software
- * for additional information regarding your rights and obligations.
- *
- * SOFTWARE AND DOCUMENTATION ARE PROVIDED “AS IS” WITHOUT WARRANTY OF ANY
- * KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION, ANY WARRANTY
- * OF MERCHANTABILITY, TITLE, NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR
- * PURPOSE. IN NO EVENT SHALL MICROCHIP OR ITS LICENSORS BE LIABLE OR
- * OBLIGATED UNDER CONTRACT, NEGLIGENCE, STRICT LIABILITY, CONTRIBUTION,
- * BREACH OF WARRANTY, OR OTHER LEGAL EQUITABLE THEORY ANY DIRECT OR INDIRECT
- * DAMAGES OR EXPENSES INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL,
- * INDIRECT, PUNITIVE OR CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA,
- * COST OF PROCUREMENT OF SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY
- * CLAIMS BY THIRD PARTIES (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF),
- * OR OTHER SIMILAR COSTS.
- *
- * Date			Comment
- *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- * 01/12/10		...
- * 02/24/11     Replace Device_Init() to DriverInterfaceInit()
- * 03/14/11     Modified PMP timing macros to use PMP_DATA_SETUP_TIME, 
- *              PMP_DATA_WAIT_TIME, and PMP_DATA_HOLD_TIME.
- *****************************************************************************/
+
+/* PMP setup for GFX */
+
 #ifndef _GFX_PMP_H_FILE
 #define _GFX_PMP_H_FILE
 
@@ -239,40 +201,13 @@ BYTE value;
 
 #endif
 
-/*********************************************************************
-* Macros:  DeviceReadWord()
-* PreCondition:  none
-* Input: none
-* Output: data read
-* Side Effects: none
-* Overview: Reads a word from the device. Depending on the interface
-*			(byte or word) it will always return a word.
-* Note: chip select should be enabled
-********************************************************************/
-#if defined (USE_16BIT_PMP)
-extern inline WORD __attribute__ ((always_inline)) DeviceReadWord()
+/*extern inline WORD __attribute__ ((always_inline)) DeviceReadWord()
 {
 WORD value;
 	value = PMDIN1;
 	PMPWaitBusy();
 	return value;
-}
-
-#elif defined (USE_8BIT_PMP)
-extern inline WORD __attribute__ ((always_inline)) DeviceReadWord()
-{
-WORD value;
-BYTE temp;
-	value = PMDIN1;
-	value = value << 8;
-	PMPWaitBusy();
-	temp = PMDIN1;
-	value = value & temp;
-	PMPWaitBusy();
-	return value;
-}
-
-#endif
+}*/
 
 /*********************************************************************
 * Function:  DeviceInit()

@@ -301,15 +301,6 @@ WORD __attribute__((weak)) Bar(SHORT left, SHORT top, SHORT right, SHORT bottom)
 {
     SHORT   x, y;
 
-#ifndef USE_NONBLOCKING_CONFIG
-    while(IsDeviceBusy() != 0) Nop();
-
-    /* Ready */
-#else
-    if(IsDeviceBusy() != 0)
-        return (0);
-#endif
-
 #ifdef USE_ALPHABLEND_LITE
     // NOTE: Alpha is never set to 0 so no need to check
     if(GetAlpha() != 100) 
@@ -357,14 +348,6 @@ WORD __attribute__((weak)) Line(SHORT x1, SHORT y1, SHORT x2, SHORT y2)
     SHORT   temp;
     SHORT   style, type;
 
-        #ifndef USE_NONBLOCKING_CONFIG
-    while(IsDeviceBusy() != 0) Nop();
-
-    /* Ready */
-        #else
-    if(IsDeviceBusy() != 0)
-        return (0);
-        #endif
 
     // Move cursor
     MoveTo(x2, y2);
@@ -922,8 +905,6 @@ WORD __attribute__((weak)) Arc(SHORT xL, SHORT yT, SHORT xR, SHORT yB, SHORT r1,
 
     while(1)
     {
-        if(IsDeviceBusy())
-            return (0);
         switch(state)
         {
             case BEGIN:
@@ -1295,14 +1276,6 @@ WORD __attribute__((weak)) Bevel(SHORT x1, SHORT y1, SHORT x2, SHORT y2, SHORT r
     SHORT       style, type, xLimit, xPos, yPos, error;
     DWORD_VAL   temp;
 
-    #ifndef USE_NONBLOCKING_CONFIG
-    while(IsDeviceBusy() != 0) Nop();
-
-    /* Ready */
-    #else
-    if(IsDeviceBusy() != 0)
-        return (0);
-    #endif
     temp.Val = SIN45 * rad;
     xLimit = temp.w[1] + 1;
     temp.Val = (DWORD) (ONEP25 - ((LONG) rad << 16));
@@ -1562,9 +1535,6 @@ WORD FillBevel(SHORT x1, SHORT y1, SHORT x2, SHORT y2, SHORT rad)
 
     while(1)
     {
-        if(IsDeviceBusy())
-            return (0);
-
         switch(state)
         {
             case FB_BEGIN:
@@ -1758,8 +1728,6 @@ WORD FillBevel(SHORT x1, SHORT y1, SHORT x2, SHORT y2, SHORT rad)
                 state = FB_WAITFORDONE;
 
             case FB_WAITFORDONE:
-                if(IsDeviceBusy())
-                    return (0);
                 
                 state = FB_BEGIN;
                 return (1);
@@ -1824,8 +1792,6 @@ WORD __attribute__((weak)) DrawPoly(SHORT numPoints, SHORT *polyPoints)
     SHORT sx, sy, ex, ey;
     while(1)
     {
-        if(IsDeviceBusy())
-            return (0);
         switch(state)
         {
             case POLY_BEGIN:
@@ -2456,13 +2422,6 @@ WORD __attribute__((weak)) OutChar(XCHAR ch)
 #ifndef USE_ANTIALIASED_FONTS
     if(currentFont.fontHeader.bpp > 1)
         return (-1);
-#endif
-
-#ifndef USE_NONBLOCKING_CONFIG
-    while(IsDeviceBusy() != 0) Nop();
-#else
-    if(IsDeviceBusy() != 0)
-        return (0);
 #endif
 
     switch(*((SHORT *)currentFont.pFont))
@@ -4281,15 +4240,6 @@ WORD PutImagePartial(SHORT left, SHORT top, void *image, BYTE stretch, SHORT xof
     GFX_IMAGE_HEADER *pimghdr = (GFX_IMAGE_HEADER *)image;
 #endif
     
-#ifndef USE_NONBLOCKING_CONFIG
-    while(IsDeviceBusy() != 0) Nop();
-
-    /* Ready */
-#else
-    if(IsDeviceBusy() != 0)
-        return (0);
-#endif
-
     // Save current color
     colorTemp = GetColor();
     resType = *((WORD *)image);

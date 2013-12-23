@@ -168,9 +168,6 @@ WORD PictDraw(void *pObj)
 
     pPict = (PICTURE *)pObj;
 
-    if(IsDeviceBusy())
-        return (0);
-
     switch(state)
     {
         case REMOVE:
@@ -191,8 +188,6 @@ WORD PictDraw(void *pObj)
         case DRAW_IMAGE:
             if(pPict->pBitmap != NULL)
             {
-                if(IsDeviceBusy())
-                    return (0);
                 if(!PutImagePartial(posleft, postop, pPict->pBitmap, pPict->scale, pPict->partial.xoffset,pPict->partial.yoffset,pPict->partial.width,pPict->partial.height))
                     return (0);
             }

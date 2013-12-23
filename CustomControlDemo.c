@@ -176,8 +176,6 @@ WORD CcDraw(void *pObj)
         case REMOVE:
             if(GetState(pCc, CC_HIDE))
             {
-                if(IsDeviceBusy())
-                    return (0);
                 SetColor(pCc->pGolScheme->CommonBkColor);
                 WAIT_UNTIL_FINISH(Bar(pCc->left, pCc->top, pCc->right, pCc->bottom));
                 return (1);
@@ -212,8 +210,6 @@ WORD CcDraw(void *pObj)
             state = BAR_DRAW;
 
         case BAR_DRAW:
-            if(IsDeviceBusy())
-                return (0);
 
             if(pCc->prevPos > pCc->pos)
             {
@@ -234,8 +230,6 @@ WORD CcDraw(void *pObj)
         case GRID_DRAW:
             while(counter < 8)
             {
-                if(IsDeviceBusy())
-                    return (0);
                 WAIT_UNTIL_FINISH
                 (
                     Bar

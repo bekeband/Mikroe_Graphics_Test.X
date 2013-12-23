@@ -1142,9 +1142,7 @@ void StartScreen(void)
 void CreatePage(XCHAR *pText)
 {
     OBJ_HEADER  *obj;
-    #if !(defined(__dsPIC33FJ128GP804__) || defined(__PIC24HJ128GP504__)||defined(GFX_PICTAIL_LCC)||defined(__32MX250F128D__))
     SHORT       i;
-	#endif
 	
     WndCreate
     (
@@ -1185,7 +1183,6 @@ void CreatePage(XCHAR *pText)
             navScheme
         );                          // use navigation scheme
 
-    #if !(defined(__dsPIC33FJ128GP804__) || defined(__PIC24HJ128GP504__)||defined(GFX_PICTAIL_LCC)||defined(__32MX250F128D__))
     RTCCProcessEvents();            // update the date and time strings
     i = 0;
     while(i < 12)
@@ -1209,7 +1206,6 @@ void CreatePage(XCHAR *pText)
         dateTimeStr,                            // text is from time value
         timeScheme
     );                  // alternate scheme
-    #endif
 #if defined (USE_FOCUS)                    
     GOLSetFocus(obj);   // set focus for the button
 #endif    
@@ -4696,8 +4692,6 @@ WORD PanelECG(void)
         case ECG_STATE_VERLINE:
             while(pos < GR_RIGHT)
             {                           // draw vertical grid lines
-                if(IsDeviceBusy())
-                    return (0);         // drawing is not completed
                 WAIT_UNTIL_FINISH(Line(pos, GR_TOP, pos, GR_BOTTOM));
                 pos += (GR_RIGHT - GR_LEFT) >> 3;
             }
@@ -4708,8 +4702,6 @@ WORD PanelECG(void)
         case ECG_STATE_HORLINE:
             while(pos < GR_BOTTOM)
             {                           // draw vertical grid lines
-                if(IsDeviceBusy())
-                    return (0);         // drawing is not completed
                 WAIT_UNTIL_FINISH(Line(GR_LEFT, pos, GR_RIGHT, pos));
                 pos += (GR_BOTTOM - GR_TOP) >> 3;
             }

@@ -385,11 +385,6 @@ inline WORD __attribute__((always_inline)) DrawButtonFocus(BUTTON *button, SHORT
     
     *current_state = FOCUS_DRAW;
 
-#ifdef USE_NONBLOCKING_CONFIG
-    if(IsDeviceBusy()) 
-        return (0);
-#endif
-
     if(GetState(button, BTN_FOCUSED))
     {
         SetLineType(FOCUS_LINE);
@@ -530,15 +525,10 @@ WORD BtnDraw(void *pObj)
     
     pB = (BUTTON *)pObj;
 
-    if(IsDeviceBusy())
-        return (0);
-
     switch(state)
     {
         case REMOVE:
-            if(IsDeviceBusy())
-                return (0);
-
+          
 #ifdef USE_BISTABLE_DISPLAY_GOL_AUTO_REFRESH
             GFX_DRIVER_SetupDrawUpdate( pB->hdr.left,
                                         pB->hdr.top,

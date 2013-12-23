@@ -1,49 +1,4 @@
-/*****************************************************************************
- *  Module for Microchip Graphics Library
- *  HIMAX HX8347 controller driver
- *****************************************************************************
- * FileName:        HX8347.c
- * Processor:       PIC24, dsPIC, PIC32
- * Compiler:        MPLAB C30, MPLAB C32
- * Company:         Microchip Technology Incorporated
- *
- * Software License Agreement
- *
- * Copyright (c) 2011 Microchip Technology Inc.  All rights reserved.
- * Microchip licenses to you the right to use, modify, copy and distribute
- * Software only when embedded on a Microchip microcontroller or digital
- * signal controller, which is integrated into your product or third party
- * product (pursuant to the sublicense terms in the accompanying license
- * agreement).  
- *
- * You should refer to the license agreement accompanying this Software
- * for additional information regarding your rights and obligations.
- *
- * SOFTWARE AND DOCUMENTATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
- * KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION, ANY WARRANTY
- * OF MERCHANTABILITY, TITLE, NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR
- * PURPOSE. IN NO EVENT SHALL MICROCHIP OR ITS LICENSORS BE LIABLE OR
- * OBLIGATED UNDER CONTRACT, NEGLIGENCE, STRICT LIABILITY, CONTRIBUTION,
- * BREACH OF WARRANTY, OR OTHER LEGAL EQUITABLE THEORY ANY DIRECT OR INDIRECT
- * DAMAGES OR EXPENSES INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL,
- * INDIRECT, PUNITIVE OR CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA,
- * COST OF PROCUREMENT OF SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY
- * CLAIMS BY THIRD PARTIES (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF),
- * OR OTHER SIMILAR COSTS.
- *
- * Date         Comment
- *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- * 05/26/09     ...
- * 04/12/11     Graphics Library Version 3.00 Support
- * 10/09/11     Fixed WritePixel() in USE_16BIT_PMP mode
- * 02/29/12     1 BPP PutImage() routines processes images with reversed 
- *              bitfields. 
- * 03/05/12     - Enabled transparency support for PutImage()
- *              - Fixed problems with PutImage() when stretch = 2.
- *              - Added GetPixel() function.   
- * 07/02/12     Modified PutImageXBPPYYY() functions to use new API.
- *****************************************************************************/
-
+/* ILI9341 for MIKROE PIC32MX board with ILI9341 TFT controller */
 
 #include <plib.h>
 #include "../../Compiler.h"
@@ -51,12 +6,6 @@
 #include "../DisplayDriver.h"
 #include "ILI9341.h"
 #include "../Primitive.h"
-
-#if defined (USE_GFX_PMP)
-    #include "../gfxpmp.h"
-#elif defined (USE_GFX_EPMP)
-    #include "../gfxepmp.h"
-#endif   
 
 // Clipping region control
 SHORT       _clipRgn;
@@ -69,10 +18,6 @@ SHORT       _clipBottom;
 
 // Color
 GFX_COLOR   _color;
-#ifdef USE_TRANSPARENT_COLOR
-GFX_COLOR   _colorTransparent;
-SHORT       _colorTransparentEnable;
-#endif
 
 #define USE_PRIMITIVE_PUTIMAGE
 #ifndef USE_PRIMITIVE_PUTIMAGE
@@ -94,6 +39,22 @@ void    PutImage8BPPExt(SHORT left, SHORT top, void *image, BYTE stretch, PUTIMA
 void    PutImage16BPPExt(SHORT left, SHORT top, void *image, BYTE stretch, PUTIMAGE_PARAM *pPartialImageData);
 #endif
 
+#define PMPWaitBusy()   while(PMMODEbits.BUSY);
+
+WORD SingleDeviceRead()
+{
+WORD value;
+	value = PMDIN;
+	PMPWaitBusy();
+	return value;
+}
+
+void DeviceWrite(WORD data)
+{
+	PMDIN = data;
+	PMPWaitBusy();
+}
+
 /*********************************************************************
 * Macros:  WritePixel(data)
 * Overview: Writes data
@@ -103,15 +64,7 @@ void    PutImage16BPPExt(SHORT left, SHORT top, void *image, BYTE stretch, PUTIM
 * Side Effects: none
 ********************************************************************/
 
-#ifdef USE_16BIT_PMP
 #define WritePixel(data)  DisplaySetData(); DeviceWrite(data)
-#else
-#define WritePixel(data) \
-    DisplaySetData(); \
-    DeviceWrite(((WORD_VAL)data).v[1]);\
-    DeviceWrite(((WORD_VAL)data).v[0]);
-#endif
-
 
 /*********************************************************************
 * Function:  void SetRegion(SHORT xbeg, SHORT xend, SHORT ybeg, SHORT yend)
@@ -258,24 +211,6 @@ void SetLCDPorts()
     TRISBbits.TRISB15 = 0;
 }
 
-void Init_MCU() {
-  PMMODE = 0;
-  PMAEN  = 0;
-  PMCON  = 0;  // WRSP: Write Strobe Polarity bit
-  PMMODEbits.MODE0 = 0;     // Master 2
-  PMMODEbits.MODE1 = 1;     // Master 2
-
-  PMMODEbits.WAITB = 0;
-  PMMODEbits.WAITM = 1;
-  PMMODEbits.WAITE = 0;
-  PMMODEbits.MODE16 = 1;   // 16 bit mode
-  PMCONbits.CSF = 0;
-  PMCONbits.PTRDEN = 1;
-  PMCONbits.PTWREN = 1;
-  PMCONbits.PMPEN = 1;
-}
-
-
 /*********************************************************************
 * Function:  void ResetDevice()
 * PreCondition: none
@@ -286,10 +221,31 @@ void Init_MCU() {
 * Note: none
 ********************************************************************/
 //#define LCD_nRESET LATCbits.LATC1
+
 void ResetDevice()
 {
 	// Initialize the device
-	DriverInterfaceInit();
+
+  DisplayResetConfig();               // enable RESET line
+  DisplayCmdDataConfig();             // enable RS line
+  DisplayDisable();                   // not selected by default
+  DisplayConfig();                    // enable chip select line
+  DisplayBacklightOff();              // initially set the backlight to off
+  DisplayBacklightConfig();           // set the backlight control pin
+
+  PMMODE = 0;
+  PMAEN = 0;
+  PMCON = 0;
+  PMMODEbits.MODE = 2;                // Intel 80 master interface
+  PMMODEbits.WAITB = PMP_Data_Setup_Wait_States;
+  PMMODEbits.WAITM = PMP_Data_Strobe_Wait_States;
+  PMMODEbits.WAITE = PMP_Data_Hold_After_Write_Strobe_Wait_States;
+  PMMODEbits.MODE16 = 1;              // 16 bit mode
+  PMCONbits.PTRDEN = 1;               // enable RD line
+  PMCONbits.PTWREN = 1;               // enable WR line
+  PMCONbits.PMPEN = 1;                // enable PMP
+
+//	DriverInterfaceInit();
 	DelayMs(1);				// Delay to let controller ready for next SetReg command
 
   ResetLCD();
@@ -500,20 +456,6 @@ GFX_COLOR GetPixel(SHORT x, SHORT y)
 }
 
 /*********************************************************************
-* Function: IsDeviceBusy()
-* Overview: Returns non-zero if LCD controller is busy 
-*           (previous drawing operation is not completed).
-* PreCondition: none
-* Input: none
-* Output: Busy status.
-* Side Effects: none
-********************************************************************/
-WORD IsDeviceBusy(void)
-{  
-    return (0);
-}
-
-/*********************************************************************
 * Function: WORD Bar(SHORT left, SHORT top, SHORT right, SHORT bottom)
 * PreCondition: none
 * Input: left,top - top left corner coordinates,
@@ -527,14 +469,6 @@ WORD Bar(SHORT left, SHORT top, SHORT right, SHORT bottom)
 {
     register SHORT  x, y;
 
-    #ifndef USE_NONBLOCKING_CONFIG
-    while(IsDeviceBusy() != 0);
-
-    /* Ready */
-    #else
-    if(IsDeviceBusy() != 0)
-        return (0);
-    #endif
     if(_clipRgn)
     {
         if(left < _clipLeft)

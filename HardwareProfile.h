@@ -51,6 +51,38 @@
 #define MIKRO_BOARD
 
 /*********************************************************************
+* PARALLEL MASTER PORT INTERFACE TIMING FOR TFT MODULE
+*********************************************************************
+ *WAITB<1:0>: Data Setup to Read/Write Strobe Wait States bits(1)
+11 = Data wait of 4 TPB; multiplexed address phase of 4 TPB
+10 = Data wait of 3 TPB; multiplexed address phase of 3 TPB
+01 = Data wait of 2 TPB; multiplexed address phase of 2 TPB
+00 = Data wait of 1 TPB; multiplexed address phase of 1 TPB (default)*/
+
+  #define PMP_Data_Setup_Wait_States                0b11
+
+/*WAITM<3:0>: Data Read/Write Strobe Wait States bits(1)
+1111 = Wait of 16 TPB
+?
+?
+?
+0001 = Wait of 2 TPB
+0000 = Wait of 1 TPB (default)*/
+  #define PMP_Data_Strobe_Wait_States               0b1111
+
+/*WAITE<1:0>: Data Hold After Read/Write Strobe Wait States bits(1)
+11 = Wait of 4 TPB
+10 = Wait of 3 TPB
+01 = Wait of 2 TPB
+00 = Wait of 1 TPB (default)
+For read operations:
+11 = Wait of 3 TPB
+10 = Wait of 2 TPB
+01 = Wait of 1 TPB
+00 = Wait of 0 TPB (default)*/
+  #define PMP_Data_Hold_After_Write_Strobe_Wait_States        0b11
+
+/*********************************************************************
 * External Memory Programmer Settings
 *********************************************************************/
 /*
@@ -372,26 +404,6 @@
    commented out or removed.
 */
   #define USE_GFX_PMP
-
-/*********************************************************************
-* PARALLEL MASTER PORT INTERFACE TIMING 
-*********************************************************************/
-	// When using the Parallel Master Port (or Enhanced Parallel Master Port) the 
-	// PMP timing must be defined for the following:
-	// PMP_DATA_SETUP_TIME or EPMPCSx_DATA_SETUP (for DWAITB) 
-	// PMP_DATA_WAIT_TIME or EPMPCSx_DATA_WAIT_TIME (for DWAITM) 
-	// and PMP_DATA_HOLD_TIME or EPMPCSx_DATA_HOLD_TIME (for DWAITE)
-    // where x is 1 or 2 (EPMP has 2 chip selects)
-	// All values are timing parameters in ns.
-	// The timing is dependent on the display controller sampling period if 
-	// interfacing with the display controller or device AC timing requirements
-	// if interfacing with a device (such as SRAM or Parallel Flash memory).
-	// Refer to your specific display controller or device to determine the 
-	// optimum (fastest) timing requirement for your interface. 
-
-  #define PMP_DATA_SETUP_TIME                (18)
-  #define PMP_DATA_WAIT_TIME                 (82)  // See HX8347 data sheet for details
-  #define PMP_DATA_HOLD_TIME                 (0)
 
   #define BACKLIGHT_ENABLE_LEVEL      0
   #define BACKLIGHT_DISABLE_LEVEL     1

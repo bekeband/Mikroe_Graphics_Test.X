@@ -284,8 +284,8 @@ EDITBOX *pEb;
 
     pEb = (EDITBOX *)pObj;
 
-    while(!IsDeviceBusy())
-    {
+/*    while(!IsDeviceBusy())
+    {*/
         switch(state){
     
             case EB_STATE_START:
@@ -472,7 +472,7 @@ EDITBOX *pEb;
     			
         } // switch()
         
-    }//  while(!IsDeviceBusy())
+//    }//  while(!IsDeviceBusy())
         
     return 0;
 }

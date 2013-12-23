@@ -231,9 +231,6 @@ WORD DmDraw(void *pObj)
 
     while(1)
     {
-
-    if(IsDeviceBusy())
-        return (0);
     
         switch(state)
         {
@@ -299,8 +296,6 @@ WORD DmDraw(void *pObj)
                 }
     
             case DM_STATE_INIT:
-                if(IsDeviceBusy())
-                    return (0);
     
                 // set clipping area, text will only appear inside the static text area.
                 SetClip(CLIP_ENABLE);
