@@ -1085,56 +1085,18 @@ void StartScreen(void)
     #define SS_ORIGIN_Y ((GetMaxY() - 140 + 1) / 2)
 
     SHORT   counter;
-    WORD    i, j, k;
-    WORD    ytemp, xtemp, srRes = 0x0001;
 
     SetColor(WHITE);
     ClearDevice();
+
+
+
     WAIT_UNTIL_FINISH(PutImage(0, 0, (void *) &mchpLogo, IMAGE_NORMAL));
     WAIT_UNTIL_FINISH(PutImage(SS_ORIGIN_X, SS_ORIGIN_Y, (void *) &intro, IMAGE_X2));
 
     for(counter = 0; counter < (GetMaxX() + 1 - 32); counter++)
     {                               // move Microchip icon
-        #ifdef __PIC24FJ256DA210__
-            if(counter == 0)
-            {
-                WAIT_UNTIL_FINISH(PutImage(counter, GetMaxY() - 34, (void *) &mchpIcon0, IMAGE_NORMAL));
-            }
-            else
-            {
-                DWORD x = counter;
-                DWORD y = GetMaxY() - 34;
-                
-                GFX_WaitForCommandQueue(4);
-                GFX_SetWorkArea1(GFX_DISPLAY_BUFFER_START_ADDRESS);
-                GFX_SetWorkArea2(GFX_DISPLAY_BUFFER_START_ADDRESS);
-
-                #if (DISP_ORIENTATION == 0)
-                {
-                    GFX_RCC_SetSrcOffset((y * DISP_HOR_RESOLUTION) + (x - 1));
-                    GFX_RCC_SetDestOffset((y * DISP_HOR_RESOLUTION) + x);
-                    GFX_RCC_SetSize(GetImageWidth((void *) &mchpIcon0), GetImageHeight((void *) &mchpIcon0));
-                    GFX_RCC_StartCopy(RCC_COPY, RCC_ROP_C, RCC_SRC_ADDR_DISCONTINUOUS, RCC_DEST_ADDR_DISCONTINUOUS);
-                    DelayMs(1);
-                }
-                #elif (DISP_ORIENTATION == 90)
-                {
-                    DWORD t = x;
-                    x = y;
-                    y = GetMaxX() - t - GetImageWidth((void *) &mchpIcon0);
-                    GFX_RCC_SetSrcOffset(((y + 1) * DISP_HOR_RESOLUTION) + x);
-                    GFX_RCC_SetDestOffset((y * DISP_HOR_RESOLUTION) + x);
-                    GFX_RCC_SetSize(GetImageHeight((void *) &mchpIcon0), GetImageWidth((void *) &mchpIcon0));
-                    GFX_RCC_StartCopy(RCC_COPY, RCC_ROP_C, RCC_SRC_ADDR_DISCONTINUOUS, RCC_DEST_ADDR_DISCONTINUOUS);
-                    DelayMs(1);
-                }
-                #else
-                    WAIT_UNTIL_FINISH(PutImage(counter, GetMaxY() - 34, (void *) &mchpIcon0, IMAGE_NORMAL));
-                #endif
-            }
-        #else
-            WAIT_UNTIL_FINISH(PutImage(counter, GetMaxY() - 34, (void *) &mchpIcon0, IMAGE_NORMAL));
-        #endif
+      WAIT_UNTIL_FINISH(PutImage(counter, GetMaxY() - 34, (void *) &mchpIcon0, IMAGE_NORMAL));
     }
 
     SetColor(BRIGHTRED);
@@ -1158,30 +1120,10 @@ void StartScreen(void)
     );
     SetClip(CLIP_ENABLE);
 
-    // random fade effect using a Linear Feedback Shift Register (LFSR)
-    SetColor(WHITE);
-    for(i = 1800; i > 0; i--)
-    {
-
-        // for a 16 bit LFSR variable the taps are at bits: 1, 2, 4, and 15
-        srRes = (srRes >> 1) ^ (-(int)(srRes & 1) & 0x8006);
-        xtemp = (srRes & 0x00FF) % 40;
-        ytemp = (srRes >> 8) % 30;
-
-        // by replicating the white (1x1) bars into 8 areas fading is faster
-        for(j = 0; j < 8; j++)
-        {
-            for(k = 0; k < 8; k++)
-                PutPixel(SS_ORIGIN_X + xtemp + (j * 40), ytemp + (k * 30));
-        }
-    }
-
     SetColor(CYAN);
     ClearDevice();
     SetClip(CLIP_DISABLE);
         
-    #if !(defined(__dsPIC33FJ128GP804__) || defined(__PIC24HJ128GP504__)||defined(GFX_PICTAIL_LCC)||defined(__32MX250F128D__))
-
 //    // initialize date and time
     mRTCCOff();
     RTCCSetBinHour(RTCC_DEFAULT_HOUR);      // set the hour value
@@ -1193,7 +1135,6 @@ void StartScreen(void)
     RTCCCalculateWeekDay();         		// calculate the weekday from this new value
     mRTCCSet();                     		// copy the new values to the RTCC registers
     RTCCProcessEvents();            		// update the date and time strings
-    #endif
  
 }
 

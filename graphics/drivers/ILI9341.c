@@ -45,8 +45,7 @@
  *****************************************************************************/
 
 
-//#if defined (GFX_USE_DISPLAY_CONTROLLER_ILI9341)
-
+#include <plib.h>
 #include "../../Compiler.h"
 //#include "TimeDelay.h"
 #include "../DisplayDriver.h"
@@ -97,17 +96,11 @@ void    PutImage16BPPExt(SHORT left, SHORT top, void *image, BYTE stretch, PUTIM
 
 /*********************************************************************
 * Macros:  WritePixel(data)
-*
 * Overview: Writes data
-*
 * PreCondition: none
-*
 * Input: data
-*
 * Output: none
-*
 * Side Effects: none
-*
 ********************************************************************/
 
 #ifdef USE_16BIT_PMP
@@ -285,35 +278,19 @@ void Init_MCU() {
 
 /*********************************************************************
 * Function:  void ResetDevice()
-*
 * PreCondition: none
-*
 * Input: none
-*
 * Output: none
-*
 * Side Effects: none
-*
 * Overview: resets LCD, initializes PMP
-*
 * Note: none
-*
 ********************************************************************/
-#define LCD_nRESET LATCbits.LATC1
+//#define LCD_nRESET LATCbits.LATC1
 void ResetDevice()
 {
-/*  SetLCDPorts();
-  Init_MCU();*/
 	// Initialize the device
 	DriverInterfaceInit();
 	DelayMs(1);				// Delay to let controller ready for next SetReg command
-
-/*  LCD_nRESET = 1;
-DelayMs(1); // Delay 1ms
-LCD_nRESET = 0;
-DelayMs(10); // Delay 10ms // This delay time is necessary
-LCD_nRESET = 1;
-DelayMs(120); // Delay 120 ms*/
 
   ResetLCD();
 
@@ -445,23 +422,16 @@ DisplayBacklightOn();
 #ifdef USE_TRANSPARENT_COLOR
 /*********************************************************************
 * Function:  void TransparentColorEnable(GFX_COLOR color)
-*
 * Overview: Sets current transparent color.
-*
 * PreCondition: none
-*
 * Input: color - Color value chosen.
-*
 * Output: none
-*
 * Side Effects: none
-*
 ********************************************************************/
 void TransparentColorEnable(GFX_COLOR color)
 {
     _colorTransparent = color;    
     _colorTransparentEnable = TRANSPARENT_COLOR_ENABLE;
-
 }
 #endif
 
@@ -499,20 +469,13 @@ void PutPixel(SHORT x, SHORT y)
 
 /*********************************************************************
 * Function: GFX_COLOR GetPixel(SHORT x, SHORT y)
-*
 * PreCondition: none
-*
 * Input: x,y - pixel coordinates 
-*
 * Output: pixel color
-*
 * Side Effects: none
-*
 * Overview: return pixel color at x,y position
-*
 * Note: This implementation assumes an 8bit Data interface. 
 *       For other data interface, this function should be modified.
-*
 ********************************************************************/
 GFX_COLOR GetPixel(SHORT x, SHORT y)
 { GFX_COLOR result;
@@ -538,18 +501,12 @@ GFX_COLOR GetPixel(SHORT x, SHORT y)
 
 /*********************************************************************
 * Function: IsDeviceBusy()
-*
 * Overview: Returns non-zero if LCD controller is busy 
 *           (previous drawing operation is not completed).
-*
 * PreCondition: none
-*
 * Input: none
-*
 * Output: Busy status.
-*
 * Side Effects: none
-*
 ********************************************************************/
 WORD IsDeviceBusy(void)
 {  
@@ -620,19 +577,12 @@ WORD Bar(SHORT left, SHORT top, SHORT right, SHORT bottom)
 
 /*********************************************************************
 * Function: void ClearDevice(void)
-*
 * PreCondition: none
-*
 * Input: none
-*
 * Output: none
-*
 * Side Effects: none
-*
 * Overview: clears screen with current color 
-*
 * Note: none
-*
 ********************************************************************/
 void ClearDevice(void)
 {   int x, y;
@@ -641,6 +591,9 @@ void ClearDevice(void)
     DisplaySetCommand();
     DeviceWrite(MemoryWrite);
     DisplaySetData();
+//    DCH0SSA=VirtToPhys(&U1RXREG);
+#ifdef USE_DMA_TO_GRAPHICS
+#else
     for (x = 0; x < GetMaxY() + 1; x++)
     {
       for (y = 0; y < GetMaxX() + 1; y++)
@@ -648,6 +601,7 @@ void ClearDevice(void)
         DeviceWrite(_color);
       }
     }
+#endif
     DisplayDisable();
 }
 
@@ -657,22 +611,15 @@ void ClearDevice(void)
 
 /*********************************************************************
 * Function: void PutImage1BPP(SHORT left, SHORT top, FLASH_BYTE* image, BYTE stretch, PUTIMAGE_PARAM *pPartialImageData)
-*
 * PreCondition: none
-*
 * Input: left,top - left top image corner,
 *        image - image pointer,
 *        stretch - image stretch factor
 *        pPartialImageData - (currently not implemented in this driver)
-*
 * Output: none
-*
 * Side Effects: none
-*
 * Overview: outputs monochrome image starting from left,top coordinates
-*
 * Note: image must be located in flash
-*
 ********************************************************************/
 void PutImage1BPP(SHORT left, SHORT top, FLASH_BYTE *image, BYTE stretch, PUTIMAGE_PARAM *pPartialImageData)
 {
@@ -758,22 +705,15 @@ void PutImage1BPP(SHORT left, SHORT top, FLASH_BYTE *image, BYTE stretch, PUTIMA
 
 /*********************************************************************
 * Function: void PutImage4BPP(SHORT left, SHORT top, FLASH_BYTE* image, BYTE stretch, PUTIMAGE_PARAM *pPartialImageData)
-*
 * PreCondition: none
-*
 * Input: left,top - left top image corner,
 *        image - image pointer,
 *        stretch - image stretch factor
 *        pPartialImageData - (currently not implemented in this driver)
-*
 * Output: none
-*
 * Side Effects: none
-*
 * Overview: outputs 16 color image starting from left,top coordinates
-*
 * Note: image must be located in flash
-*
 ********************************************************************/
 void PutImage4BPP(SHORT left, SHORT top, FLASH_BYTE *image, BYTE stretch, PUTIMAGE_PARAM *pPartialImageData)
 {

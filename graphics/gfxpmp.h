@@ -71,17 +71,11 @@
 #endif
 /*********************************************************************
 * Macros:  PMPWaitBusy()
-*
 * Overview: waits for PMP cycle end.
-*
 * PreCondition: none
-*
 * Input: none
-*
 * Output: none
-*
 * Side Effects: none
-*
 ********************************************************************/
 #define PMPWaitBusy()   while(PMMODEbits.BUSY); 
 
@@ -151,19 +145,12 @@ extern inline void __attribute__ ((always_inline)) DisplayResetConfig()
 #endif
 /*********************************************************************
 * Macros:  DeviceWrite(data)
-*
 * PreCondition:  none
-*
 * Input: data - value to be written to RAM
-*
 * Output: none
-*
 * Side Effects: none
-*
 * Overview: writes data into controller's RAM
-*
 * Note: chip select should be enabled
-*
 ********************************************************************/
 #if defined (USE_16BIT_PMP)
 
@@ -185,19 +172,12 @@ extern inline void __attribute__ ((always_inline)) DeviceWrite(BYTE data)
 
 /*********************************************************************
 * Macros:  DeviceRead()
-*
 * PreCondition:  none
-*
 * Input: none
-*
 * Output: data read
-*
 * Side Effects: none
-*
 * Overview: reads data from controller's RAM
-*
 * Note: chip select should be enabled
-*
 ********************************************************************/
 #if defined (USE_16BIT_PMP)
 
@@ -231,20 +211,13 @@ BYTE value;
 
 /*********************************************************************
 * Macros:  SingleDeviceRead()
-*
 * PreCondition:  none
-*
 * Input: none
-*
 * Output: data read
-*
 * Side Effects: none
-*
 * Overview: a single read is performed. This is useful in issuing 
 *			one read acess only.
-*
 * Note: chip select should be enabled
-*
 ********************************************************************/
 #if defined (USE_16BIT_PMP)
 extern inline WORD __attribute__ ((always_inline)) SingleDeviceRead()
@@ -268,20 +241,13 @@ BYTE value;
 
 /*********************************************************************
 * Macros:  DeviceReadWord()
-*
 * PreCondition:  none
-*
 * Input: none
-*
 * Output: data read
-*
 * Side Effects: none
-*
 * Overview: Reads a word from the device. Depending on the interface
 *			(byte or word) it will always return a word.
-*
 * Note: chip select should be enabled
-*
 ********************************************************************/
 #if defined (USE_16BIT_PMP)
 extern inline WORD __attribute__ ((always_inline)) DeviceReadWord()
@@ -308,22 +274,14 @@ BYTE temp;
 
 #endif
 
-  
 /*********************************************************************
 * Function:  DeviceInit()
-*
 * PreCondition:  none
-*
 * Input: none
-*
 * Output: none
-*
 * Side Effects: none
-*
 * Overview: initializes the device
-*
 * Note: none
-*
 ********************************************************************/
 
 extern inline void __attribute__ ((always_inline)) DriverInterfaceInit(void)
@@ -354,6 +312,7 @@ extern inline void __attribute__ ((always_inline)) DriverInterfaceInit(void)
         else if (PMP_DATA_SETUP_TIME > pClockPeriod)
             PMMODEbits.WAITB = (PMP_DATA_SETUP_TIME / pClockPeriod) + 1;
     #endif
+//    PMMODEbits.WAITB = 0b11;
     
     #if (PMP_DATA_WAIT_TIME == 0)
         PMMODEbits.WAITM = 0;
@@ -363,6 +322,7 @@ extern inline void __attribute__ ((always_inline)) DriverInterfaceInit(void)
         else if (PMP_DATA_WAIT_TIME > pClockPeriod)
             PMMODEbits.WAITM = (PMP_DATA_WAIT_TIME / pClockPeriod) + 1;
     #endif
+//    PMMODEbits.WAITM = 0b1111;
     
     #if (PMP_DATA_HOLD_TIME == 0)
         PMMODEbits.WAITE = 0;
@@ -372,6 +332,7 @@ extern inline void __attribute__ ((always_inline)) DriverInterfaceInit(void)
         else if (PMP_DATA_HOLD_TIME > pClockPeriod)
             PMMODEbits.WAITE = (PMP_DATA_HOLD_TIME / pClockPeriod) + 1;
     #endif
+//    PMMODEbits.WAITE = 0b11;
 
     #if defined(USE_16BIT_PMP)
     PMMODEbits.MODE16 = 1;              // 16 bit mode

@@ -117,6 +117,10 @@
 #define USE_DIGITALMETER        // Enable DigitalMeter Object.
 //#define USE_TEXTENTRY			// Enable TextEntry Object.
 #define USE_CUSTOM				// Enable Custom Control Object (an example to create customized Object).
+/* Use DMA to graphics: Use DMA channel to graphics mass function ie.: ClearDevice and etc. */
+//#define USE_DMA_TO_GRAPHICS
+/* Used DMA channel. */
+#define DMA_CHANNEL 1
 
 /*********************************************************************
 * Overview: To enable support for unicode fonts, USE_MULTIBYTECHAR  
