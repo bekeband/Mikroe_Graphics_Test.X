@@ -587,7 +587,7 @@ void InitGraph(void)
 #endif
 
     // Clear screen
-    ClearDevice();
+//    ClearDevice();
 
     // Disable clipping
     SetClip(CLIP_DISABLE);
@@ -2937,22 +2937,15 @@ SHORT __attribute__((weak)) GetImageHeight(void *image)
 
 /*********************************************************************
 * Function: void PutImage1BPP(SHORT left, SHORT top, FLASH_BYTE* image, BYTE stretch, PUTIMAGE_PARAM *pPartialImageData)
-*
 * PreCondition: none
-*
 * Input: left,top - left top image corner,
 *        image - image pointer,
 *        stretch - image stretch factor
 *        partialImage - partial image pointer
-*
 * Output: none
-*
 * Side Effects: none
-*
 * Overview: outputs monochrome image starting from left,top coordinates
-*
 * Note: image must be located in flash
-*
 ********************************************************************/
 void __attribute__((weak)) PutImage1BPP(SHORT left, SHORT top, FLASH_BYTE *image, BYTE stretch, PUTIMAGE_PARAM *pPartialImageData)
 {

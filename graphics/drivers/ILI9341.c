@@ -42,8 +42,7 @@ void    PutImage16BPPExt(SHORT left, SHORT top, void *image, BYTE stretch, PUTIM
 #define PMPWaitBusy()   while(PMMODEbits.BUSY);
 
 WORD SingleDeviceRead()
-{
-WORD value;
+{ WORD value;
 	value = PMDIN;
 	PMPWaitBusy();
 	return value;
@@ -52,19 +51,80 @@ WORD value;
 void DeviceWrite(WORD data)
 {
 	PMDIN = data;
+#ifndef TFT_NO_WAIT_BUSY
 	PMPWaitBusy();
+#endif
 }
 
-/*********************************************************************
-* Macros:  WritePixel(data)
-* Overview: Writes data
-* PreCondition: none
-* Input: data
-* Output: none
-* Side Effects: none
-********************************************************************/
+/* ResetLCD */
+void ResetLCD()
+{
+  DisplayResetDisable();
+  DelayMs(100);
+  DisplayResetEnable();
+  DelayMs(100);
+  DisplayResetDisable();
+  DelayMs(100);
+}
 
-#define WritePixel(data)  DisplaySetData(); DeviceWrite(data)
+void WriteCommand(int cmd)
+{
+  DisplaySetCommand();
+  DeviceWrite(cmd);
+}
+
+void SoftResetLCD()
+{
+  WriteCommand(SOFT_RESET_REG);
+  DelayMs(100);
+}
+
+void WriteData(unsigned int _data)
+{
+  DisplaySetData();
+  DeviceWrite(_data);
+}
+
+void ILI9341_DisplayOff()
+{
+  WriteCommand(DisplayOff); // Display off
+  DelayMs(20);
+}
+
+void ILI9341_DisplayOn()
+{
+  WriteCommand(DisplayOn); // Display on
+}
+
+void ILI9341_Enter_Sleep(void)
+{
+  ILI9341_DisplayOff();
+  WriteCommand(EnterSleepMode); // Enter Sleep mode
+}
+
+void ILI9341_Exit_Sleep(void)
+{
+  WriteCommand(SleepOut); // Sleep out
+  DelayMs(120);
+  ILI9341_DisplayOn();
+}
+
+
+void ILI9341_Invert()
+{
+  WriteCommand(DisplayInversionOn);
+}
+
+void ILI9341_ReInvert()
+{
+  WriteCommand(DisplayInversionOff);
+}
+
+void ILI9341_SetBrightness(unsigned char brightness)
+{
+  WriteCommand(WriteDisplayBrightness);
+  WriteData(brightness);
+}
 
 /*********************************************************************
 * Function:  void SetRegion(SHORT xbeg, SHORT xend, SHORT ybeg, SHORT yend)
@@ -78,137 +138,42 @@ void DeviceWrite(WORD data)
 
 inline void SetRegion(SHORT xbeg, SHORT xend, SHORT ybeg, SHORT yend)
 {
-	DisplaySetCommand();
-  DeviceWrite(ColumnAddressSet);
-	DisplaySetData();
-  DeviceWrite(((WORD_VAL) (WORD) xbeg).byte.HB);
-  DeviceWrite(((WORD_VAL) (WORD) xbeg).byte.LB);
-  DeviceWrite(((WORD_VAL) (WORD) xend).byte.HB);
-  DeviceWrite(((WORD_VAL) (WORD) xend).byte.LB);
+  WriteCommand(ColumnAddressSet);
+  WriteData(((WORD_VAL) (WORD) xbeg).byte.HB);
+  WriteData(((WORD_VAL) (WORD) xbeg).byte.LB);
+  WriteData(((WORD_VAL) (WORD) xend).byte.HB);
+  WriteData(((WORD_VAL) (WORD) xend).byte.LB);
 
-	DisplaySetCommand();
-  DeviceWrite(PageAddressSet);
-	DisplaySetData();
-  DeviceWrite(((WORD_VAL) (WORD) ybeg).byte.HB);
-  DeviceWrite(((WORD_VAL) (WORD) ybeg).byte.LB);
-  DeviceWrite(((WORD_VAL) (WORD) yend).byte.HB);
-  DeviceWrite(((WORD_VAL) (WORD) yend).byte.LB);
+  WriteCommand(PageAddressSet);
+  WriteData(((WORD_VAL) (WORD) ybeg).byte.HB);
+  WriteData(((WORD_VAL) (WORD) ybeg).byte.LB);
+  WriteData(((WORD_VAL) (WORD) yend).byte.HB);
+  WriteData(((WORD_VAL) (WORD) yend).byte.LB);
   
 }
 /*********************************************************************
 * Function:  void SetAddress(SHORT x, SHORT y)
-*
 * Overview: Writes address pointer.
-*
 * PreCondition: none
-*
 * Input: x - horizontal position
 *        y - vertical position
-*
 * Output: none
-*
 * Side Effects: none
-*
 ********************************************************************/
 inline void SetAddress(SHORT x, SHORT y)
 {
-//  DisplayEnable();
-	DisplaySetCommand();
-  DeviceWrite(ColumnAddressSet);
-	DisplaySetData();
-  DeviceWrite(((WORD_VAL) (WORD) x).byte.HB);
-  DeviceWrite(((WORD_VAL) (WORD) x).byte.LB);
-  DeviceWrite(((WORD_VAL) (WORD) x).byte.HB);
-  DeviceWrite(((WORD_VAL) (WORD) x).byte.LB);
+  WriteCommand(ColumnAddressSet);
+  WriteData(((WORD_VAL) (WORD) x).byte.HB);
+  WriteData(((WORD_VAL) (WORD) x).byte.LB);
+  WriteData(((WORD_VAL) (WORD) x).byte.HB);
+  WriteData(((WORD_VAL) (WORD) x).byte.LB);
 
-	DisplaySetCommand();
-  DeviceWrite(PageAddressSet);
-	DisplaySetData();
-  DeviceWrite(((WORD_VAL) (WORD) y).byte.HB);
-  DeviceWrite(((WORD_VAL) (WORD) y).byte.LB);
-  DeviceWrite(((WORD_VAL) (WORD) y).byte.HB);
-  DeviceWrite(((WORD_VAL) (WORD) y).byte.LB);
+  WriteCommand(PageAddressSet);
+  WriteData(((WORD_VAL) (WORD) y).byte.HB);
+  WriteData(((WORD_VAL) (WORD) y).byte.LB);
+  WriteData(((WORD_VAL) (WORD) y).byte.HB);
+  WriteData(((WORD_VAL) (WORD) y).byte.LB);
 
-//  DisplayDisable();
-}
-
-void ResetLCD()
-{
-//  DisplayEnable();
-  DisplayResetDisable();
-  DelayMs(100);
-  DisplayResetEnable();
-  DelayMs(100);
-  DisplayResetDisable();
-  DelayMs(100);
-}
-
-void WriteCommand(int cmd)
-{
-  DisplayEnable();
-  DisplaySetCommand();
-  PMDIN = cmd;
-  PMPWaitBusy();
-  DisplayDisable();
-}
-
-void SoftResetLCD()
-{
-  WriteCommand(SOFT_RESET_REG);
-  DelayMs(100);
-}
-
-void WritePMPIN(unsigned int _data)
-{
-  PMDIN = _data;
-}
-
-void WriteData(unsigned int _data)
-{
-  DisplayEnable();
-  DisplaySetData();
-  PMDIN = _data;
-  PMPWaitBusy();
-  DisplayDisable();
-}
-
-/*********************************************************************
-* Function:  void  SetReg(BYTE index, BYTE value)
-*
-* PreCondition: none
-*
-* Input: index - register number
-*        value - value to be set
-*
-* Output: none
-*
-* Side Effects: none
-*
-* Overview: sets graphics controller register
-*
-* Note: none
-*
-********************************************************************/
-void SetReg(BYTE index, BYTE value)
-{
-	DisplayEnable();
-	DisplaySetCommand();
-	DeviceWrite(index);
-	DisplaySetData();
-	DeviceWrite(value);
-	DisplayDisable();
-}
-
-void SetLCDPorts()
-{
-    /* LCD hardware reset pin output */
-    TRISCbits.TRISC1 = 0;
-    TRISDbits.TRISD4 = 0;   //PMWR
-    TRISDbits.TRISD5 = 0;   //PMRD
-    /* LCD CS to select lCD chip... */
-    TRISFbits.TRISF12 = 0;
-    /* D/CX(SCL) IO Register select signal */
-    TRISBbits.TRISB15 = 0;
 }
 
 /*********************************************************************
@@ -245,131 +210,132 @@ void ResetDevice()
   PMCONbits.PTWREN = 1;               // enable WR line
   PMCONbits.PMPEN = 1;                // enable PMP
 
-//	DriverInterfaceInit();
 	DelayMs(1);				// Delay to let controller ready for next SetReg command
 
   ResetLCD();
 
-LCD_ILI9341_CMD(PowerControlB);        //Power control B (CFh)
-LCD_ILI9341_Parameter(0x00);
-LCD_ILI9341_Parameter(0x81);
-LCD_ILI9341_Parameter(0X30);
+  DisplayEnable();
+  WriteCommand(PowerControlB);        //Power control B (CFh)
+  WriteData(0x00);
+  WriteData(0x81);
+  WriteData(0X30);
 
-LCD_ILI9341_CMD(PowerOnSequenceControl);
-LCD_ILI9341_Parameter(0x64);
-LCD_ILI9341_Parameter(0x03);
-LCD_ILI9341_Parameter(0X12);
-LCD_ILI9341_Parameter(0X81);
+  WriteCommand(PowerOnSequenceControl);
+  WriteData(0x64);
+  WriteData(0x03);
+  WriteData(0X12);
+  WriteData(0X81);
 
-LCD_ILI9341_CMD(DriverTimingControlA);
-LCD_ILI9341_Parameter(0x85);
-LCD_ILI9341_Parameter(0x10);
-LCD_ILI9341_Parameter(0x78);
+  WriteCommand(DriverTimingControlA);
+  WriteData(0x85);
+  WriteData(0x10);
+  WriteData(0x78);
 
-LCD_ILI9341_CMD(PowerControlA);
-LCD_ILI9341_Parameter(0x39);
-LCD_ILI9341_Parameter(0x2C);
-LCD_ILI9341_Parameter(0x00);
-LCD_ILI9341_Parameter(0x34);
-LCD_ILI9341_Parameter(0x02);
+  WriteCommand(PowerControlA);
+  WriteData(0x39);
+  WriteData(0x2C);
+  WriteData(0x00);
+  WriteData(0x34);
+  WriteData(0x02);
 
-LCD_ILI9341_CMD(PumpRatioControl);
-LCD_ILI9341_Parameter(0x20);
+WriteCommand(PumpRatioControl);
+WriteData(0x20);
 
-LCD_ILI9341_CMD(DriverTimingControlB);
-LCD_ILI9341_Parameter(0x00);
-LCD_ILI9341_Parameter(0x00);
+WriteCommand(DriverTimingControlB);
+WriteData(0x00);
+WriteData(0x00);
 
-LCD_ILI9341_CMD(FrameRateControlInNormalModeFullColors);
-LCD_ILI9341_Parameter(0x00);
-LCD_ILI9341_Parameter(0x1B);
+WriteCommand(FrameRateControlInNormalModeFullColors);
+WriteData(0x00);
+WriteData(0x1B);
 
-LCD_ILI9341_CMD(DisplayFunctionControl);        // Display Function Control
-LCD_ILI9341_Parameter(0x0A);
-LCD_ILI9341_Parameter(0xA2);
+WriteCommand(DisplayFunctionControl);        // Display Function Control
+WriteData(0x0A);
+WriteData(0xA2);
 
-LCD_ILI9341_CMD(PowerControl1);         //Power control
-LCD_ILI9341_Parameter(0x21);            //VRH[5:0]
+WriteCommand(PowerControl1);         //Power control
+WriteData(0x21);            //VRH[5:0]
 
-LCD_ILI9341_CMD(PowerControl2);         //Power control
-LCD_ILI9341_Parameter(0x11);            //SAP[2:0];BT[3:0]
+WriteCommand(PowerControl2);         //Power control
+WriteData(0x11);            //SAP[2:0];BT[3:0]
 
-LCD_ILI9341_CMD(VCOMControl1);          //VCM control
-LCD_ILI9341_Parameter(0x3F);
-LCD_ILI9341_Parameter(0x3C);
+WriteCommand(VCOMControl1);          //VCM control
+WriteData(0x3F);
+WriteData(0x3C);
 
-LCD_ILI9341_CMD(VCOMControl2);          //VCM control2
-LCD_ILI9341_Parameter(0Xb5);
+WriteCommand(VCOMControl2);          //VCM control2
+WriteData(0Xb5);
 
-LCD_ILI9341_CMD(PixelFormatSet);
+WriteCommand(PixelFormatSet);
 
 #if defined (_64K_COLOR_MODE)
-LCD_ILI9341_Parameter(BITPERPIXEL16);
+WriteData(BITPERPIXEL16);
 #elif defined (_256K_COLOR_MODE)
-LCD_ILI9341_Parameter(BITPERPIXEL18);
+WriteData(BITPERPIXEL18);
 #endif
 
-LCD_ILI9341_CMD(MemoryAccessControl);        // Memory Access Control
-LCD_ILI9341_Parameter(RGBSET | MVSET | MXSET);
+WriteCommand(MemoryAccessControl);        // Memory Access Control
+WriteData(RGBSET | MVSET | MXSET);
 
-LCD_ILI9341_CMD(InterfaceControl);        // Memory Access Control
-LCD_ILI9341_Parameter(0x01);
+WriteCommand(InterfaceControl);        // Memory Access Control
+WriteData(0x01);
 #if defined (_MDT00)
-LCD_ILI9341_Parameter(MDT00);
+WriteData(MDT00);
 #elif defined (_MDT01)
-LCD_ILI9341_Parameter(MDT01);
+WriteData(MDT01);
 #else
 #error "You must define the MDT parameter !"
 #endif
 
-LCD_ILI9341_Parameter(0x00);
+WriteData(0x00);
 
-LCD_ILI9341_CMD(Enable3G);              // 3Gamma Function Disable
-LCD_ILI9341_Parameter(0x00);
-LCD_ILI9341_CMD(GammaSet);              //Gamma curve selected
-LCD_ILI9341_Parameter(0x01);
+WriteCommand(Enable3G);              // 3Gamma Function Disable
+WriteData(0x00);
+WriteCommand(GammaSet);              //Gamma curve selected
+WriteData(0x01);
 
-LCD_ILI9341_CMD(PositiveGammaCorrection);        //Set Gamma
-LCD_ILI9341_Parameter(0x0F);
-LCD_ILI9341_Parameter(0x26);
-LCD_ILI9341_Parameter(0x24);
-LCD_ILI9341_Parameter(0x0B);
-LCD_ILI9341_Parameter(0x0E);
-LCD_ILI9341_Parameter(0x09);
-LCD_ILI9341_Parameter(0x54);
-LCD_ILI9341_Parameter(0XA8);
-LCD_ILI9341_Parameter(0x46);
-LCD_ILI9341_Parameter(0x0C);
-LCD_ILI9341_Parameter(0x17);
-LCD_ILI9341_Parameter(0x09);
-LCD_ILI9341_Parameter(0x0F);
-LCD_ILI9341_Parameter(0x07);
-LCD_ILI9341_Parameter(0x00);
+WriteCommand(PositiveGammaCorrection);        //Set Gamma
+WriteData(0x0F);
+WriteData(0x26);
+WriteData(0x24);
+WriteData(0x0B);
+WriteData(0x0E);
+WriteData(0x09);
+WriteData(0x54);
+WriteData(0XA8);
+WriteData(0x46);
+WriteData(0x0C);
+WriteData(0x17);
+WriteData(0x09);
+WriteData(0x0F);
+WriteData(0x07);
+WriteData(0x00);
 
-LCD_ILI9341_CMD(NegativeGammaCorrection);        //Set Gamma
-LCD_ILI9341_Parameter(0x00);
-LCD_ILI9341_Parameter(0x19);
-LCD_ILI9341_Parameter(0x1B);
-LCD_ILI9341_Parameter(0x04);
-LCD_ILI9341_Parameter(0x10);
-LCD_ILI9341_Parameter(0x07);
-LCD_ILI9341_Parameter(0x2A);
-LCD_ILI9341_Parameter(0x47);
-LCD_ILI9341_Parameter(0x39);
-LCD_ILI9341_Parameter(0x03);
-LCD_ILI9341_Parameter(0x06);
-LCD_ILI9341_Parameter(0x06);
-LCD_ILI9341_Parameter(0x30);
-LCD_ILI9341_Parameter(0x38);
-LCD_ILI9341_Parameter(0x0F);
+WriteCommand(NegativeGammaCorrection);        //Set Gamma
+WriteData(0x00);
+WriteData(0x19);
+WriteData(0x1B);
+WriteData(0x04);
+WriteData(0x10);
+WriteData(0x07);
+WriteData(0x2A);
+WriteData(0x47);
+WriteData(0x39);
+WriteData(0x03);
+WriteData(0x06);
+WriteData(0x06);
+WriteData(0x30);
+WriteData(0x38);
+WriteData(0x0F);
 
 //lcdSetWindow(10, 230 - 1, 10, 310 - 1);
 
-LCD_ILI9341_CMD(SleepOut);        //Exit Sleep
+WriteCommand(SleepOut);        //Exit Sleep
 DelayMs(120);
 //delayms(120);
-LCD_ILI9341_CMD(0x29);        //Display on
+WriteCommand(0x29);        //Display on
 
+DisplayDisable();
 DisplayBacklightOn();
 
 }
@@ -390,6 +356,31 @@ void TransparentColorEnable(GFX_COLOR color)
     _colorTransparentEnable = TRANSPARENT_COLOR_ENABLE;
 }
 #endif
+
+/* Logical color converting to RGB pixel. The RGB pixel represents the TFT's RGB
+ pixel. This struct depending from TFT color resolution, and addressing mode. */
+
+RGBPIXEL ColorToPixel(GFX_COLOR ic)
+{ RGBPIXEL result;
+#if defined (_256K_COLOR_MODE)
+  C565 ic565;
+  ic565.D16 = ic;
+  #if (COLOR_DEPTH == 16)
+    result.B = ic565.B << 3;
+    result.G = ic565.G << 2;
+    result.R = ic565.R << 3;
+  #elif (COLOR_DEPTH == 24)
+
+  #endif
+#else
+  #if (COLOR_DEPTH == 16)
+    result.D16 = ic;
+  #elif (COLOR_DEPTH == 24)
+
+  #endif
+#endif
+  return result;
+}
 
 /*********************************************************************
 * Function: void PutPixel(SHORT x, SHORT y)
@@ -419,7 +410,13 @@ void PutPixel(SHORT x, SHORT y)
     DisplaySetCommand();
     DeviceWrite(MemoryWrite);
     DisplaySetData();
-    DeviceWrite(_color);
+#if defined (_256K_COLOR_MODE)
+    RGBPIXEL p = ColorToPixel(_color);
+    DeviceWrite(p.L16);
+    DeviceWrite(p.H16);
+#else
+    DeviceWrite(ColorToPixel(_color).D16);
+#endif
     DisplayDisable();
 }
 
@@ -481,6 +478,7 @@ WORD Bar(SHORT left, SHORT top, SHORT right, SHORT bottom)
             bottom = _clipBottom;
     }
 
+    RGBPIXEL p = ColorToPixel(_color);
     DisplayEnable();
     
     SetRegion(left, right, top, bottom);
@@ -491,20 +489,14 @@ WORD Bar(SHORT left, SHORT top, SHORT right, SHORT bottom)
     {
       for(x = left; x < right + 1; x++)
       {
-        DeviceWrite(_color);
+#if defined (_256K_COLOR_MODE)
+    DeviceWrite(p.L16);
+    DeviceWrite(p.H16);
+#else
+    DeviceWrite(p.D16);
+#endif
       }
     }
-
-//    SetRegion(0, GetMaxX(), 0, GetMaxY());
-/*    for(y = top; y < bottom + 1; y++)
-    {
-        SetAddress(left, y);
-        for(x = left; x < right + 1; x++)
-        {
-            WritePixel(_color);
-        }
-    }*/
-//    SetRegion(0, GetMaxX(), 0, GetMaxY());
     DisplayDisable();
     return (1);
 }
@@ -519,24 +511,28 @@ WORD Bar(SHORT left, SHORT top, SHORT right, SHORT bottom)
 * Note: none
 ********************************************************************/
 void ClearDevice(void)
-{   int x, y;
-    DisplayEnable();
-    SetRegion(0, GetMaxX(), 0, GetMaxY());
-    DisplaySetCommand();
-    DeviceWrite(MemoryWrite);
-    DisplaySetData();
-//    DCH0SSA=VirtToPhys(&U1RXREG);
-#ifdef USE_DMA_TO_GRAPHICS
-#else
-    for (x = 0; x < GetMaxY() + 1; x++)
+{   int x, y; RGBPIXEL p;
+  p = ColorToPixel(_color);
+  DisplayEnable();
+  SetRegion(0, GetMaxX(), 0, GetMaxY());
+  DisplaySetCommand();
+  DeviceWrite(MemoryWrite);
+  DisplaySetData();
+
+  for (x = 0; x < GetMaxY() + 1; x++)
+  {
+    for (y = 0; y < GetMaxX() + 1; y++)
     {
-      for (y = 0; y < GetMaxX() + 1; y++)
-      {
-        DeviceWrite(_color);
-      }
-    }
+#if defined (_256K_COLOR_MODE)
+    DeviceWrite(p.L16);
+    DeviceWrite(p.H16);
+#else
+    DeviceWrite(p.D16);
 #endif
-    DisplayDisable();
+    }
+  }
+
+  DisplayDisable();
 }
 
 #ifndef USE_PRIMITIVE_PUTIMAGE

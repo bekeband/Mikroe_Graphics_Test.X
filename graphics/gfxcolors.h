@@ -64,7 +64,9 @@
 *           - GFX_COLOR is type BYTE  if COLOR_DEPTH <= 8   
 *           - GFX_COLOR is type WORD if COLOR_DEPTH = 16
 *           - GFX_COLOR is type DWORD if COLOR_DEPTH = 24  
-*
+* This is the logical color type. The type size, and format is'nt obligate
+ * same of the phisical color type, whitch is represent a TFT pixel, and
+ * may 16 or 18 bits RGB data.
 *********************************************************************/
 #if (COLOR_DEPTH <= 8)
     typedef BYTE GFX_COLOR;   

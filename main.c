@@ -1089,8 +1089,6 @@ void StartScreen(void)
     SetColor(WHITE);
     ClearDevice();
 
-
-
     WAIT_UNTIL_FINISH(PutImage(0, 0, (void *) &mchpLogo, IMAGE_NORMAL));
     WAIT_UNTIL_FINISH(PutImage(SS_ORIGIN_X, SS_ORIGIN_Y, (void *) &intro, IMAGE_X2));
 

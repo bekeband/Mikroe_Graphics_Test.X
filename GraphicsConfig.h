@@ -110,8 +110,8 @@
 	#define GFX_free(pObj)    	    free(pObj)
 
 /*********************************************************************
-* Overview: Specifies the color depth used in the demo.
-*
+* Overview: Specifies the color depth for color constants, and procedures
+ * 
 *********************************************************************/
 
     #define COLOR_DEPTH             16

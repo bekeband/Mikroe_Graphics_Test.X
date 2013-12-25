@@ -46,10 +46,6 @@
 * START OF GRAPHICS RELATED MACROS
 ********************************************************************/
 
-#define USE_16BIT_PMP
-#define GFX_USE_DISPLAY_CONTROLLER_ILI9341
-#define MIKRO_BOARD
-
 /*********************************************************************
 * PARALLEL MASTER PORT INTERFACE TIMING FOR TFT MODULE
 *********************************************************************
@@ -393,6 +389,10 @@ For read operations:
 
   #define GFX_USE_TCON_CUSTOM
 
+  #define DISP_DATA_WIDTH 16
+  #define DISPLAY_COLOR_DEPTH DISP_DATA_WIDTH
+
+//  #define TFT_NO_WAIT_BUSY
 
 /*********************************************************************
 * DISPLAY PARALLEL INTERFACE 

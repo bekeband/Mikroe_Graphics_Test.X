@@ -41,11 +41,28 @@
 #ifndef _ILI9341_H
     #define _ILI9341_H
 
-#define LCD_ILI9341_CMD WriteCommand
-#define LCD_ILI9341_Parameter WriteData
+/*262K color: 18-bit/pixel (RGB 6-6-6 bits input)
+ * Send datas R6:2G6:2, B6:2R6:2, G6:2B6:2,... 2 pixels (6 subpixels)
+*/
+//#define _MDT00
+
+/*262K color: 18-bit/pixel (RGB 6-6-6 bits input)
+ * Send datas: R6:2G6:2, B6:2:8, ... 1 pixel (3 subpixels)
+*/
+
 #define _MDT01
-//#define _256K_COLOR_MODE
-#define _64K_COLOR_MODE
+
+/*262K color: 18-bit/pixel (RGB 6-6-6 bits input)
+ * One pixel (3 sub-pixels) display data is sent by 2 transfers when DBI [2:0]
+ * bits of 3Ah register are set to ?110?.*/
+
+#define _256K_COLOR_MODE
+
+/*65K color: 16-bit/pixel (RGB 5-6-5 bits input)
+ * One pixel (3 sub-pixels) display data is sent by 1 transfer when DBI [2:0] bits
+ * of 3Ah register are set to ?101?.*/
+
+//#define _64K_COLOR_MODE
 
 /* ------------------- Define ILI9341 controller commands. -------------------*/
 /*Power control B (CFh)*/
@@ -442,6 +459,85 @@ If using RGB Interface must selection serial interface.*/
 #define ENABLE_3G_REG   0xF2
 #define INTERFCTL_REG   0xF6
 #define PUMPRATIOCTL_REG  0xF7
+
+typedef union {
+  struct {
+    unsigned B : 5; // 32
+    unsigned G : 6; // 64
+    unsigned R : 5; // 32
+  };
+  struct {
+    unsigned D16 : 16;
+  };
+} C565;
+
+/* Typedef of one pixel derivating of the ILI controller color mode.  */
+
+typedef union {
+
+#if defined (_256K_COLOR_MODE)
+  struct {
+    unsigned G : 8;
+    unsigned R : 8;
+    unsigned :8;
+    unsigned B : 8;
+  };
+  struct {
+    unsigned L16 : 16;
+    unsigned H16 : 16;
+  };
+  struct {
+    unsigned D32 : 32;
+  };
+
+#elif defined (_64K_COLOR_MODE)
+  struct {
+    unsigned B : 5; // 32
+    unsigned G : 6; // 64
+    unsigned R : 5; // 32
+  };
+  struct {
+    unsigned D16 : 16;
+  };
+#else
+#error "Must be defined color mode !"
+#endif
+} RGBPIXEL;
+
+#if defined (_256K_COLOR_MODE)
+
+  /* union to RGB pixel out in MODE00 state. */
+    typedef union {
+    struct {
+      unsigned A16 : 16;
+      unsigned B16 : 16;
+      unsigned C16 : 16;
+    };
+    struct {
+      unsigned AL8 : 8;
+      unsigned AH8 : 8;
+      unsigned BL8 : 8;
+      unsigned BH8 : 8;
+      unsigned CL8 : 8;
+      unsigned CH8 : 8;
+    };
+  } MODE00_STRUCT;
+
+  /* union to RGB pixel out in MODE01 state. */
+    typedef union {
+    struct {
+      unsigned A16 : 16;
+      unsigned B16 : 16;
+    };
+    struct {
+      unsigned AL8 : 8;
+      unsigned AH8 : 8;
+      unsigned : 8;
+      unsigned BH8 : 8;
+    };
+  } MODE01_STRUCT;
+
+#endif
 
 
 #endif // _HX8347_H
