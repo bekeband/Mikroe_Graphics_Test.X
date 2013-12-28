@@ -61,7 +61,7 @@
  * This is an error check for the color depth
  *****************************************************************************/
 #if (COLOR_DEPTH > 16)
-#error "Color Depth needs to be 16 to correctly use these resources"
+//#error "Color Depth needs to be 16 to correctly use these resources"
 #endif
 
 

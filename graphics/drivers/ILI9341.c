@@ -1,8 +1,6 @@
 /* ILI9341 for MIKROE PIC32MX board with ILI9341 TFT controller */
 
 #include <plib.h>
-#include "../../Compiler.h"
-//#include "TimeDelay.h"
 #include "../DisplayDriver.h"
 #include "ILI9341.h"
 #include "../Primitive.h"
@@ -17,7 +15,7 @@ SHORT       _clipRight;
 SHORT       _clipBottom; 
 
 // Color
-GFX_COLOR   _color;
+//GFX_COLOR   _color;
 
 #define USE_PRIMITIVE_PUTIMAGE
 #ifndef USE_PRIMITIVE_PUTIMAGE
@@ -108,7 +106,6 @@ void ILI9341_Exit_Sleep(void)
   DelayMs(120);
   ILI9341_DisplayOn();
 }
-
 
 void ILI9341_Invert()
 {
@@ -238,105 +235,102 @@ void ResetDevice()
   WriteData(0x34);
   WriteData(0x02);
 
-WriteCommand(PumpRatioControl);
-WriteData(0x20);
+  WriteCommand(PumpRatioControl);
+  WriteData(0x20);
 
-WriteCommand(DriverTimingControlB);
-WriteData(0x00);
-WriteData(0x00);
+  WriteCommand(DriverTimingControlB);
+  WriteData(0x00);
+  WriteData(0x00);
 
-WriteCommand(FrameRateControlInNormalModeFullColors);
-WriteData(0x00);
-WriteData(0x1B);
+  WriteCommand(FrameRateControlInNormalModeFullColors);
+  WriteData(0x00);
+  WriteData(0x1B);
 
-WriteCommand(DisplayFunctionControl);        // Display Function Control
-WriteData(0x0A);
-WriteData(0xA2);
+  WriteCommand(DisplayFunctionControl);        // Display Function Control
+  WriteData(0x0A);
+  WriteData(0xA2);
 
-WriteCommand(PowerControl1);         //Power control
-WriteData(0x21);            //VRH[5:0]
+  WriteCommand(PowerControl1);         //Power control
+  WriteData(0x21);            //VRH[5:0]
 
-WriteCommand(PowerControl2);         //Power control
-WriteData(0x11);            //SAP[2:0];BT[3:0]
+  WriteCommand(PowerControl2);         //Power control
+  WriteData(0x11);            //SAP[2:0];BT[3:0]
 
-WriteCommand(VCOMControl1);          //VCM control
-WriteData(0x3F);
-WriteData(0x3C);
+  WriteCommand(VCOMControl1);          //VCM control
+  WriteData(0x3F);
+  WriteData(0x3C);
 
-WriteCommand(VCOMControl2);          //VCM control2
-WriteData(0Xb5);
+  WriteCommand(VCOMControl2);          //VCM control2
+  WriteData(0Xb5);
 
-WriteCommand(PixelFormatSet);
+  WriteCommand(PixelFormatSet);
 
 #if defined (_64K_COLOR_MODE)
-WriteData(BITPERPIXEL16);
+  WriteData(BITPERPIXEL16);
 #elif defined (_256K_COLOR_MODE)
-WriteData(BITPERPIXEL18);
+  WriteData(BITPERPIXEL18);
 #endif
 
-WriteCommand(MemoryAccessControl);        // Memory Access Control
-WriteData(RGBSET | MVSET | MXSET);
+  WriteCommand(MemoryAccessControl);        // Memory Access Control
+  WriteData(RGBSET | MVSET | MXSET);
 
-WriteCommand(InterfaceControl);        // Memory Access Control
-WriteData(0x01);
+  WriteCommand(InterfaceControl);        // Memory Access Control
+  WriteData(0x01);
 #if defined (_MDT00)
-WriteData(MDT00);
+  WriteData(MDT00);
 #elif defined (_MDT01)
-WriteData(MDT01);
+  WriteData(MDT01);
 #else
-#error "You must define the MDT parameter !"
+  #error "You must define the MDT parameter !"
 #endif
 
-WriteData(0x00);
+  WriteData(0x00);
 
-WriteCommand(Enable3G);              // 3Gamma Function Disable
-WriteData(0x00);
-WriteCommand(GammaSet);              //Gamma curve selected
-WriteData(0x01);
+  WriteCommand(Enable3G);              // 3Gamma Function Disable
+  WriteData(0x00);
+  WriteCommand(GammaSet);              //Gamma curve selected
+  WriteData(0x01);
 
-WriteCommand(PositiveGammaCorrection);        //Set Gamma
-WriteData(0x0F);
-WriteData(0x26);
-WriteData(0x24);
-WriteData(0x0B);
-WriteData(0x0E);
-WriteData(0x09);
-WriteData(0x54);
-WriteData(0XA8);
-WriteData(0x46);
-WriteData(0x0C);
-WriteData(0x17);
-WriteData(0x09);
-WriteData(0x0F);
-WriteData(0x07);
-WriteData(0x00);
+  WriteCommand(PositiveGammaCorrection);        //Set Gamma
+  WriteData(0x0F);
+  WriteData(0x26);
+  WriteData(0x24);
+  WriteData(0x0B);
+  WriteData(0x0E);
+  WriteData(0x09);
+  WriteData(0x54);
+  WriteData(0XA8);
+  WriteData(0x46);
+  WriteData(0x0C);
+  WriteData(0x17);
+  WriteData(0x09);
+  WriteData(0x0F);
+  WriteData(0x07);
+  WriteData(0x00);
 
-WriteCommand(NegativeGammaCorrection);        //Set Gamma
-WriteData(0x00);
-WriteData(0x19);
-WriteData(0x1B);
-WriteData(0x04);
-WriteData(0x10);
-WriteData(0x07);
-WriteData(0x2A);
-WriteData(0x47);
-WriteData(0x39);
-WriteData(0x03);
-WriteData(0x06);
-WriteData(0x06);
-WriteData(0x30);
-WriteData(0x38);
-WriteData(0x0F);
+  WriteCommand(NegativeGammaCorrection);        //Set Gamma
+  WriteData(0x00);
+  WriteData(0x19);
+  WriteData(0x1B);
+  WriteData(0x04);
+  WriteData(0x10);
+  WriteData(0x07);
+  WriteData(0x2A);
+  WriteData(0x47);
+  WriteData(0x39);
+  WriteData(0x03);
+  WriteData(0x06);
+  WriteData(0x06);
+  WriteData(0x30);
+  WriteData(0x38);
+  WriteData(0x0F);
 
-//lcdSetWindow(10, 230 - 1, 10, 310 - 1);
+  WriteCommand(SleepOut);        //Exit Sleep
+  DelayMs(120);
+  WriteCommand(0x29);        //Display on
 
-WriteCommand(SleepOut);        //Exit Sleep
-DelayMs(120);
-//delayms(120);
-WriteCommand(0x29);        //Display on
-
-DisplayDisable();
-DisplayBacklightOn();
+  DisplayDisable();
+  DisplayBacklightOn();
 
 }
 
@@ -363,20 +357,22 @@ void TransparentColorEnable(GFX_COLOR color)
 RGBPIXEL ColorToPixel(GFX_COLOR ic)
 { RGBPIXEL result;
 #if defined (_256K_COLOR_MODE)
-  C565 ic565;
-  ic565.D16 = ic;
   #if (COLOR_DEPTH == 16)
     result.B = ic565.B << 3;
     result.G = ic565.G << 2;
     result.R = ic565.R << 3;
   #elif (COLOR_DEPTH == 24)
-
+    result.B = ic & 0xFF;
+    result.G = (ic & 0xFF00) >> 8;
+    result.R = (ic & 0xFF0000) >> 16;
   #endif
-#else
+#else  //_64K_COLOR_MODE
   #if (COLOR_DEPTH == 16)
-    result.D16 = ic;
+    result.D16 = ic;  // This is straight to int to int data copy.
   #elif (COLOR_DEPTH == 24)
-
+    result.B = (ic & 0xF8) >> 3;
+    result.G = (ic & 0xFC00) >> 10;
+    result.R = (ic & 0xF80000) >> 19;
   #endif
 #endif
   return result;

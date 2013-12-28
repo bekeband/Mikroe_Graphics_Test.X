@@ -188,7 +188,7 @@ void ResetDevice(void);
 * Side Effects: none
 *
 ********************************************************************/
-#define SetColor(color) _color = (color)
+//#define SetColor(color) _color = (color)
 
 /*********************************************************************
 * Macros:  GetColor()

@@ -173,6 +173,7 @@
 		*
 		********************************************************************/	
          #define RGBConvert(red, green, blue)    (GFX_COLOR) (((GFX_COLOR)(red) << 16) | ((GFX_COLOR)(green) << 8) | (GFX_COLOR)(blue))
+//         #define RGBConvert(red, green, blue)    (GFX_COLOR) (((GFX_COLOR)(blue) << 24) | ((GFX_COLOR)(red) << 8) | (GFX_COLOR)(green))
     #endif
 
    #define ConvertColor50(color)  (GFX_COLOR)((color & (0x00FEFEFEul))>>1)

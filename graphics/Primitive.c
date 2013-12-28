@@ -2954,7 +2954,7 @@ void __attribute__((weak)) PutImage1BPP(SHORT left, SHORT top, FLASH_BYTE *image
     WORD                sizeX, sizeY;
     WORD                x, y;
     WORD                xc, yc;
-    WORD                pallete[2];
+    WORD                palette[2];
     WORD                mask;
     WORD                addressOffset = 0, adjOffset;
     WORD                OffsetFlag = 0x01;     //Offset from BYTE color bit0 for the partial image 
@@ -2967,9 +2967,9 @@ void __attribute__((weak)) PutImage1BPP(SHORT left, SHORT top, FLASH_BYTE *image
     flashAddress += 2;
     sizeX = *((FLASH_WORD *)flashAddress);
     flashAddress += 2;
-    pallete[0] = *((FLASH_WORD *)flashAddress);
+    palette[0] = *((FLASH_WORD *)flashAddress);
     flashAddress += 2;
-    pallete[1] = *((FLASH_WORD *)flashAddress);
+    palette[1] = *((FLASH_WORD *)flashAddress);
     flashAddress += 2;
 
     if (sizeX & 0x07)
@@ -3037,7 +3037,7 @@ void __attribute__((weak)) PutImage1BPP(SHORT left, SHORT top, FLASH_BYTE *image
                     #ifdef USE_PALETTE
                         SetColor(1);
                     #else
-                        SetColor(pallete[1]);
+                        SetColor(palette[1]);
                     #endif                
                 }
                 else
@@ -3046,7 +3046,7 @@ void __attribute__((weak)) PutImage1BPP(SHORT left, SHORT top, FLASH_BYTE *image
                     #ifdef USE_PALETTE
                         SetColor(0);
                     #else
-                        SetColor(pallete[0]);
+                        SetColor(palette[0]);
                     #endif
                 }
 
@@ -3101,7 +3101,7 @@ void __attribute__((weak)) PutImage1BPP(SHORT left, SHORT top, FLASH_BYTE *image
                     #ifdef USE_PALETTE
                         SetColor(1);
                     #else
-                        SetColor(pallete[1]);
+                        SetColor(palette[1]);
                     #endif                
                 }
                 else
@@ -3110,7 +3110,7 @@ void __attribute__((weak)) PutImage1BPP(SHORT left, SHORT top, FLASH_BYTE *image
                     #ifdef USE_PALETTE
                         SetColor(0);
                     #else
-                        SetColor(pallete[0]);
+                        SetColor(palette[0]);
                     #endif
                 }
                 #ifdef USE_TRANSPARENT_COLOR

@@ -56,13 +56,13 @@
  * One pixel (3 sub-pixels) display data is sent by 2 transfers when DBI [2:0]
  * bits of 3Ah register are set to ?110?.*/
 
-#define _256K_COLOR_MODE
+//#define _256K_COLOR_MODE
 
 /*65K color: 16-bit/pixel (RGB 5-6-5 bits input)
  * One pixel (3 sub-pixels) display data is sent by 1 transfer when DBI [2:0] bits
  * of 3Ah register are set to ?101?.*/
 
-//#define _64K_COLOR_MODE
+#define _64K_COLOR_MODE
 
 /* ------------------- Define ILI9341 controller commands. -------------------*/
 /*Power control B (CFh)*/
@@ -350,7 +350,7 @@ If using RGB Interface must selection serial interface.*/
 * Overview: Color depth.
 *********************************************************************/
     #if (COLOR_DEPTH != 16)
-        #error "This driver doesn't support this color depth. It should be 16."
+//        #error "This driver doesn't support this color depth. It should be 16."
     #endif
 
 /*********************************************************************

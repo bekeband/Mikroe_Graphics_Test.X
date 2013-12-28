@@ -1090,12 +1090,12 @@ void StartScreen(void)
     ClearDevice();
 
     WAIT_UNTIL_FINISH(PutImage(0, 0, (void *) &mchpLogo, IMAGE_NORMAL));
-    WAIT_UNTIL_FINISH(PutImage(SS_ORIGIN_X, SS_ORIGIN_Y, (void *) &intro, IMAGE_X2));
+/*    WAIT_UNTIL_FINISH(PutImage(SS_ORIGIN_X, SS_ORIGIN_Y, (void *) &intro, IMAGE_X2));
 
     for(counter = 0; counter < (GetMaxX() + 1 - 32); counter++)
     {                               // move Microchip icon
       WAIT_UNTIL_FINISH(PutImage(counter, GetMaxY() - 34, (void *) &mchpIcon0, IMAGE_NORMAL));
-    }
+    }*/
 
     SetColor(BRIGHTRED);
     SetFont((void *)ptrLargeAsianFont);
@@ -1118,7 +1118,7 @@ void StartScreen(void)
     );
     SetClip(CLIP_ENABLE);
 
-    SetColor(CYAN);
+    SetColor(WHITE);
     ClearDevice();
     SetClip(CLIP_DISABLE);
         
